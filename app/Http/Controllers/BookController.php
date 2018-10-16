@@ -62,7 +62,7 @@ class BookController extends Controller
 
 		$url = "https://www.payfast.co.za/eng/process/?" . $getString ;
 
-		header("location: " . $url) ;
+		return redirect( $url ) ;
 
 	}
 

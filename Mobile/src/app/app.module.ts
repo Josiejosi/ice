@@ -39,6 +39,8 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { File } from '@ionic-native/file';
 import { GlobalsProvider } from '../providers/globals/globals';
 
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -101,6 +103,7 @@ import { GlobalsProvider } from '../providers/globals/globals';
     InAppBrowser,
     NativeAudio,
     FileTransfer,
+    Camera,
     File,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GlobalsProvider

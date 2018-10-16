@@ -82,7 +82,7 @@ export class BooksDetailsPage {
 		payScript += "form.submit();" ;*/
 
 //if (this.platform.is('cordova')) {
-	  	let browser = this.inappbrowser.create( "http://app.ellumin.test/pay/"+chapter+"/"+title, '_blank', 'location=no') ;
+	  	let browser = this.inappbrowser.create( "http://169.60.182.182/pay/"+chapter+"/"+title, '_blank', 'location=no') ;
 	   	browser.show();
 	   	browser.on("loadstart").subscribe( event => {
 	        console.log("loadstop -->",event);
@@ -95,15 +95,15 @@ export class BooksDetailsPage {
 	    browser.on("loadstop").subscribe(  event => {
 	        //browser.executeScript({ code:payScript });
 	       	console.log("loadstart -->",event);
-	        if ( event.url == "http://app.ellumin.test/payment/return" ) {
+	        if ( event.url == "http://169.60.182.182/payment/return" ) {
 	        	console.log( "return" ) ;
 	         	browser.close() ;
 	        }
-	        if ( event.url == "http://app.ellumin.test/payment/cancel" ) {
+	        if ( event.url == "http://169.60.182.182/payment/cancel" ) {
 	        	console.log( "cancel" ) ;
 	         	browser.close() ;
 	        }
-	        if ( event.url == "http://app.ellumin.test/payment/notify" ) {
+	        if ( event.url == "http://169.60.182.182/payment/notify" ) {
 	        	console.log( "notify" ) ;
 	         	browser.close() ;
 	        }
