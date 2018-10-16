@@ -1,0 +1,40 @@
+<ion-header>
+<ion-navbar  color="ellumiate">
+<ion-title text-center>50%</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content class="auth-register">
+<div class="login-content">
+<progress-bar [progress]="loadProgress"></progress-bar>
+<!-- Logo -->
+<div padding text-center>
+	<p>Add a profile</p>
+	<!-- <div class="logo"><img src="assets/imgs/avatar1.png"></div> -->
+	<div id="imgTest"></div>
+	<div class="image-upload">
+		<label for="file-input">
+			<img [src]="pro_pic" width="100px" />
+			
+		</label>
+		<input id="file-input"  accept="image/*"  [(ngModel)]="file_upload" type="file" (change)='handleFileSelect($event)' />
+	</div>
+</div>
+<div padding text-center>
+	<ion-grid>
+	<ion-row>
+	<ion-col col-6><img src="assets/imgs/boy.png" class="split-line"></ion-col>
+	<ion-col col-6><img src="assets/imgs/girl.png"></ion-col>
+	</ion-row>
+	</ion-grid>
+	<ion-grid>
+	<ion-row>
+	<ion-col col-6><button ion-button block round outline color="ellumiate"   (click)="select_gender('Male');">Male</button></ion-col>
+	<ion-col col-6><button ion-button block round outline color="ellumiate"  (click)="select_gender('Female');">Female</button></ion-col>
+	</ion-row>
+	</ion-grid>
+</div>
+<div margin-top>
+	<button ion-button block color="ellumiate-dark" tappable (click)="add_qualification();">NEXT</button>
+</div>
+</div>
+</ion-content>

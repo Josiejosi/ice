@@ -1,0 +1,31 @@
+<ion-header>
+<ion-navbar>
+<ion-title>Chapters</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+<ion-list padding>
+<ion-item *ngFor="let chapter of chapters;">
+<h2>{{ ( chapter.name ).slice(0, -5) }}</h2>
+<ion-grid>
+<ion-row>
+<ion-col col-4>
+<button ion-button block color="dark" icon-only clear tappable (click)="preview(chapter.chapter_preview_content);">
+<ion-icon name="eye"></ion-icon>
+</button>
+</ion-col>
+<ion-col col-4>
+<button ion-button block color="dark" icon-only clear tappable (click)="download(chapter.raw_content);">
+<ion-icon name="cloud-download"></ion-icon>
+</button>
+</ion-col>
+<ion-col col-4>
+<button ion-button block color="dark" icon-only clear tappable (click)="listen(chapter.text_content);">
+<ion-icon name="musical-notes"></ion-icon>
+</button>
+</ion-col>
+</ion-row>
+</ion-grid>
+</ion-item>
+</ion-list>
+</ion-content>

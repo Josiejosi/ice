@@ -1,0 +1,68 @@
+<!-- -->
+<ion-header>
+<ion-navbar color="ellumiate">
+<button ion-button menuToggle>
+<ion-icon name="menu"></ion-icon>
+</button>
+<p text-center text-white>Home</p>
+<ion-buttons end>
+<!-- <button ion-button tappable (click)="presentNotifications($event)">
+<ion-icon name="notifications"></ion-icon>
+</button> -->
+<button ion-button tappable (click)="goToAccount()">
+<ion-icon name="basket"></ion-icon>
+</button>
+</ion-buttons>
+</ion-navbar>
+<ion-toolbar  color="ellumiate">
+<div class="user-avatar text-center" text-center>
+	<img [src]="pro_pic" width="80px">
+</div>
+<p ion-text text-center text-white class="no-margin bold text-white">
+	{{ fullname }}
+</p>
+</ion-toolbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+<ion-item>
+<ion-label> <ion-icon name="search"></ion-icon></ion-label>
+<ion-input clearInput type="text" [(ngModel)]="search_criteria"></ion-input>
+<button item-right color="primary" round tappable (click)="Search()"><ion-icon name="search"></ion-icon></button>
+</ion-item>
+<!-- <ion-list padding>
+<ion-item *ngFor="let book of books;" (click)="selectBook(book);">
+<ion-avatar item-start>
+<img src="{{ assets_directory }}{{ book.cover_url }}">
+</ion-avatar>
+<h2>{{ book.title }}</h2>
+<p>{{ book.author }}</p>
+</ion-item>
+</ion-list> -->
+<div padding>
+	<h6>
+	Suggested Books
+	<button color="primary" small round tappable (click)="Search()">view all</button>
+	</h6>
+	<ion-scroll scrollX="true" style="width:100vw; height:150px" >
+	<ion-row nowrap>
+	<div class="scrollmenu" *ngFor="let book of books;" (click)="selectBook(book);">
+		<a href="#">
+			<img src="{{ assets_directory }}{{ book.cover_url }}" width="85">
+			<br><span class="title">{{ book.title }}</span>
+			<br><span class="author">{{ book.author }}</span>
+		</a>
+	</div>
+	</ion-row>
+	</ion-scroll>
+</div>
+<div padding>
+	<h6>
+	My Books
+	<button color="primary" small round tappable (click)="Search()">view all</button>
+	</h6>
+	<ion-scroll scrollX="true" style="width:100vw; height:150px" >
+	<ion-row nowrap class="headerChip">
+	</ion-row>
+	</ion-scroll>
+</div>
+</ion-content>

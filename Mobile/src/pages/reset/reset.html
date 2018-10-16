@@ -1,0 +1,27 @@
+<!-- -->
+<ion-content padding class="animated fadeIn login auth-page">
+<div class="login-content">
+	<!-- Logo -->
+	<div padding-horizontal text-center class="animated fadeInDown">
+		<div class="logo"><img src="assets/imgs/small.png"></div>
+		<h2 ion-text class="text-primary"><strong>E-</strong>llumin8</h2>
+	</div>
+	<!-- Login form -->
+	<form class="list-form">
+		<ion-item>
+		<ion-label floating><ion-icon name="mail" item-start class="text-primary"></ion-icon>Email</ion-label>
+		<ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+		</ion-item>
+	</form>
+	
+	<div>
+		<button ion-button icon-start block color="dark" tappable (click)="reset();">
+		<ion-icon name="mail"></ion-icon>SEND ME RESET EMAIL
+		</button>
+	</div>
+	<!-- Other links -->
+	<div text-center margin-top>
+		<span ion-text color="primary" tappable (click)="login();">Just remembered password</span>
+	</div>
+</div>
+</ion-content>

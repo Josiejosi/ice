@@ -1,0 +1,47 @@
+<ion-header>
+<ion-navbar  color="ellumiate">
+<ion-title text-center>20%</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content class="auth-register">
+<div class="login-content">
+<progress-bar [progress]="loadProgress"></progress-bar>
+<!-- Logo -->
+<div padding text-center>
+	<div class="logo"><img src="assets/imgs/small.png"></div>
+	<h2 ion-text class="text-primary">
+	<strong>E-</strong>llumin8
+	</h2>
+</div>
+<!-- Login form -->
+<form class="list-form">
+	<ion-item>
+	<ion-label fixed>Full Name</ion-label>
+	<ion-input type="text" [(ngModel)]="fullname" name="fullname"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label fixed>Surname</ion-label>
+	<ion-input type="text" [(ngModel)]="surname" name="surname"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label fixed>Email</ion-label>
+	<ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label fixed>Date OF Birth</ion-label>
+	<ion-input type="text" [(ngModel)]="dob" name="dob"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label fixed>Cell Phone</ion-label>
+	<ion-input type="text" [(ngModel)]="cell_phone_number" name="cell_phone_number"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label fixed>Password</ion-label>
+	<ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+	</ion-item>
+</form>
+<div margin-top>
+	<button ion-button block color="ellumiate" tappable (click)="add_profile();">NEXT</button>
+</div>
+</div>
+</ion-content>

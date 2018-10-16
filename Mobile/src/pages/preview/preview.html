@@ -1,0 +1,16 @@
+<ion-header>
+<ion-navbar color="ellumiate">
+<p text-center text-white>{{ title }}</p>
+<ion-buttons end>
+<!-- <button ion-button tappable (click)="presentNotifications($event)">
+<ion-icon name="notifications"></ion-icon>
+</button> -->
+<button ion-button tappable (click)="PlaySound()">
+<ion-icon name="headset"></ion-icon>
+</button>
+</ion-buttons>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+<div [innerHtml]="content"></div>
+</ion-content>

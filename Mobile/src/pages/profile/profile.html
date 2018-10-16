@@ -1,0 +1,53 @@
+<ion-header>
+<ion-navbar color="ellumiate">
+<ion-title>Profile</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+<!-- Login form -->
+<form class="list-form">
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Full Name</ion-label>
+	<ion-input type="text" [(ngModel)]="fullname" name="fullname"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Age</ion-label>
+	<ion-input type="text" [(ngModel)]="age" name="age"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Cell Phone</ion-label>
+	<ion-input type="text" [(ngModel)]="cell_phone_number" name="cell_phone_number"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Gender</ion-label>
+	<ion-input type="text" [(ngModel)]="gender" name="gender"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Province</ion-label>
+	<ion-input type="text" [(ngModel)]="province" name="province"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Type Of Studies</ion-label>
+	<ion-input type="text" [(ngModel)]="type_of_study" name="type_of_study"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Institution</ion-label>
+	<ion-input type="text" [(ngModel)]="institution" name="institution"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Field Of Study</ion-label>
+	<ion-input type="text" [(ngModel)]="field_of_study" name="field_of_study"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="mail" item-start class="text-primary"></ion-icon>Email</ion-label>
+	<ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="lock" item-start class="text-primary"></ion-icon>Password</ion-label>
+	<ion-input type="password" [(ngModel)]="password"  name="password"></ion-input>
+	</ion-item>
+</form>
+<div margin-top>
+	<button ion-button block color="dark" tappable (click)="register();">UPDATE</button>
+</div>
+</ion-content>

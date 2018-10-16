@@ -1,0 +1,32 @@
+page-home {
+
+}
+.scrollmenu {
+/*     overflow: auto;
+white-space: nowrap; */
+    width: 250px !important;
+
+}
+
+.scrollmenu a {
+    display: inline-block;
+    color: #333 !important;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.author {
+	color: #ccc ;
+	font-size: 10px ;
+}
+
+.title {
+	color: #333 ;
+	font-size: 12px ;
+}
+
+.scrollmenu a:hover {
+    background-color: #777;
+
+}
