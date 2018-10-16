@@ -22,6 +22,7 @@ class CreateBooksTable extends Migration
             $table->string('author_review');
             $table->string('cover_url');
             $table->string('book_url');
+            $table->boolean('status');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

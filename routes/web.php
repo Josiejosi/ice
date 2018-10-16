@@ -18,8 +18,16 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/upload/book', 'BookController@upload_book');
 Route::get('/books', 'BookController@index')->name('books');
+
+Route::get('/pending_books', 'BookController@pending_books')->name('pending_books');
+Route::get('/view_book/{id}', 'BookController@view_book');
+Route::get('/approve_book/{id}', 'BookController@approve_book');
+
+Route::post('/create/chapter/{id}', 'BookController@create_chapter');
+
 Route::get('/text_to_speach', 'BookController@text_to_speach');
-Route::get('/pay/{chapter}/{title}', 'BookController@pay');
+
+Route::get('/pay/{chapter}/{title}', 'PaymentController@pay');
 
 Route::get('/payment/return', 'PaymentController@return') ;
 Route::get('/payment/cancel', 'PaymentController@cancel') ;

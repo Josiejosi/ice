@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Book ;
 use App\Chapter ;
+use App\TempPage ;
 
 use GoogleSpeech\TextToSpeech ;
 
@@ -17,53 +18,156 @@ class BookController extends Controller
 		return view('books', ['books' => Book::all()] ) ;
 
 	}
+	
+	public function view_book($id) { 
+		return view('books.view', ['book' => Book::find( $id ), 'pages'=> TempPage::take(30)->where( 'book_id', $id )->get()] ) ;
+	}
 
-	public function pay( $chapter, $title) {
+	public function pending_books() { 
+		return view('books.pending', ['books' => Book::where( 'status', 0 )->get()] ) ;
+	}
+	
+	public function approve_book( Request $request, $id ) { 
+		$book 											= Book::find( $id ) ;
+		$book->status 									= true ;
+		$book->save() ;
 
-		$data = [
-		    // Merchant details
-		    'merchant_id' => '12966341',
-		    'merchant_key' => '5018xj78swngr',
-		    'return_url' => url('/') . '/payment/return',
-		    'cancel_url' => url('/') . '/payment/cancel',
-		    'notify_url' => url('/') . '/payment/notify',
-		    // Buyer details
-		    'name_first' => 'Tebogo',
-		    'name_last'  => 'Sewape',
-		    'email_address'=> 'sewapetj@gmail.com',
-		    // Transaction details
-		    'm_payment_id' => rand( 1111111111,999999999 ), //Unique payment ID to pass through to notify_url
-		    // Amount needs to be in ZAR
-		    // If multicurrency system its conversion has to be done before building this array
-		    'amount' => number_format( sprintf( "%.2f", 5 ), 2, '.', '' ),
-		    'item_name' => $chapter . " - " . $title,
-		    'item_description' => $title,
-		    'custom_int1' => rand( 1111111111,999999999 ), //custom integer to be passed through           
-		    'custom_str1' => $chapter . " - " . $title
-		] ;   
+		$request->session()->flash( 'status', 'Book Approved, now ready to be purchased on apps.' ) ;
 
-		$pfOutput  = "" ;     
+		return redirect()->back() ;
 
-		// Create GET string
-		foreach( $data as $key => $val )
-		{
-		    if(!empty($val))
-		     {
-		        $pfOutput .= $key .'='. urlencode( trim( $val ) ) .'&';
-		     }
+	}
+
+	public function create_chapter( Request $request ) {
+		$new_chapter = '<!DOCTYPE html>
+		<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+		<head>
+		    <title>Chapter</title>
+		    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		    <meta name="author" content="Tebogo Sewape">
+		    <style type="text/css">
+		    .xflip {
+		    -moz-transform: scaleX(-1);
+		    -webkit-transform: scaleX(-1);
+		    -o-transform: scaleX(-1);
+		    transform: scaleX(-1);
+		    filter: fliph;
+		    }
+		    .yflip {
+		    -moz-transform: scaleY(-1);
+		    -webkit-transform: scaleY(-1);
+		    -o-transform: scaleY(-1);
+		    transform: scaleY(-1);
+		    filter: flipv;
+		    }
+		    .xyflip {
+		    -moz-transform: scaleX(-1) scaleY(-1);
+		    -webkit-transform: scaleX(-1) scaleY(-1);
+		    -o-transform: scaleX(-1) scaleY(-1);
+		    transform: scaleX(-1) scaleY(-1);
+		    filter: fliph + flipv;
+		    }
+		    body { width: 918px; margin: 5px auto; }
+		    </style>
+		</head>
+		<body bgcolor="#A0A0A0" vlink="blue" link="blue">' ;
+
+		$chapter_preview_content = '<!DOCTYPE html>
+		<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+		<head>
+		    <title>Chapter</title>
+		    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		    <meta name="author" content="Tebogo Sewape">
+		    <style type="text/css">
+		    .xflip {
+		    -moz-transform: scaleX(-1);
+		    -webkit-transform: scaleX(-1);
+		    -o-transform: scaleX(-1);
+		    transform: scaleX(-1);
+		    filter: fliph;
+		    }
+		    .yflip {
+		    -moz-transform: scaleY(-1);
+		    -webkit-transform: scaleY(-1);
+		    -o-transform: scaleY(-1);
+		    transform: scaleY(-1);
+		    filter: flipv;
+		    }
+		    .xyflip {
+		    -moz-transform: scaleX(-1) scaleY(-1);
+		    -webkit-transform: scaleX(-1) scaleY(-1);
+		    -o-transform: scaleX(-1) scaleY(-1);
+		    transform: scaleX(-1) scaleY(-1);
+		    filter: fliph + flipv;
+		    }
+		    body { width: 918px; margin: 5px auto; }
+		    </style>
+		</head>
+		<body bgcolor="#A0A0A0" vlink="blue" link="blue">' ;
+
+		$pages 								= $request->page ;
+		$book_id 							= $request->book_id ;
+		$chapter_number 					= $request->chapter_number ;
+
+		$number_of_pages 					= count($pages) ;
+
+		$chapter_preview_content_count 		= 0 ;
+
+		for ($i=1; $i < $number_of_pages; $i++) { 
+			//TempPage
+
+			$page_id 						= $pages[$i] ;
+
+			$page 							= TempPage::find( $page_id ) ;
+
+			$raw_css 						= $page->raw_css ;
+			$raw_html 						= $page->raw_html ;
+
+			$new_chapter 					.= $raw_css .  $raw_html ;
+
+			if ( $chapter_preview_content_count < 3 ) {
+				$chapter_preview_content 	.= $raw_css .  $raw_html ;
+				$chapter_preview_content_count++ ;
+			}
+
+			$page->delete() ;
+
 		}
-		// Remove last ampersand
-		$getString = substr( $pfOutput, 0, -1 );
-		if( isset( $passPhrase ) )
-		{
-		    $getString .= '&passphrase='. urlencode( trim( $passPhrase ) ) ;
-		}   
-		$data['signature'] = md5( $getString ) ;
 
-		$url = "https://www.payfast.co.za/eng/process/?" . $getString ;
+		$new_chapter . "</body></html>" ;
 
-		return redirect( $url ) ;
+		$chapter_preview_content . "</body></html>" ;
 
+		$new_generated_path 				= public_path() . '/uploads/books/publisher_id_'.auth()->user()->id ;
+
+		$file_content_tags 					= strip_tags( $new_chapter ) ;
+
+		$speech = new TextToSpeech() ;
+		$speech->withLanguage('en-us')->inPath( $new_generated_path . '/audio/') ;
+
+		$audio_path = "" ;
+
+		$download_tts = trim(preg_replace("/[^a-zA-Z0-9\s]/", "", $file_content_tags)) ;
+		$speech->withName( "chapter_" . $chapter_number ) ;
+		$speech->download( substr( $download_tts, 0, 200 ) ) ;
+										    
+		$audio_path = $speech->getCompletePath() ;
+
+
+		$chapter 							= new Chapter ;
+		$chapter->name 						= $chapter_number ;
+		$chapter->file_name 				= $audio_path ;
+		$chapter->raw_content 				= $new_chapter ;
+		$chapter->text_content 				= $file_content_tags ;
+		$chapter->chapter_preview_content 	= $chapter_preview_content ;
+		$chapter->book_id 					= $book_id ;
+		$chapter->audio_url 				= $audio_path ;
+		$chapter->chapter_number			= $chapter_number ;
+		$chapter->save() ;
+
+		$request->session()->flash( 'status', 'Successfully created Chapter: \''.$chapter_number ) ;
+
+		return redirect()->back() ;
 	}
 
 	public function text_to_speach() {
@@ -120,8 +224,21 @@ class BookController extends Controller
 
 		if ( $request->hasFile( 'book' ) ) {
 
-		    $path 											= $request->book->path();
-			$extension 										= $request->book->extension();
+		    $path 											= $request->book->path() ;
+			$extension 										= $request->book->extension() ;
+			
+			$book 											= new Book ;
+
+			$book->title 									= $book_title ;
+			$book->description 								= $book_desc ;
+			$book->author 									= $book_author ;
+			$book->imei_number 								= $book_imei_number ;
+			$book->author_review 							= $author_review ;
+			$book->cover_url 								= $cover_url ;
+			$book->book_url 								= $cover_content ;//status
+			$book->status 									= false ;
+			$book->user_id 									= auth()->user()->id ;
+			$book->save() ;
 
 			//working with epub.
 			//
@@ -132,7 +249,7 @@ class BookController extends Controller
 
 				$zip 											= new \ZipArchive;
 				$res 											= $zip->open( public_path() . '/uploads/' . $cover_content ) ;
-
+				
 				if ( $res ) {
 
 					$zip->extractTo( public_path() . '/uploads/' .$path_to_store_chapters ) ;
@@ -143,18 +260,8 @@ class BookController extends Controller
 					if ( file_exists ( $oebps_dir ) ) {
 
 						if ( $handle = opendir( $oebps_dir ) ) {
-
-							$book 								= new Book ;
-
-							$book->title 						= $book_title ;
-							$book->description 					= $book_desc ;
-							$book->author 						= $book_author ;
-							$book->imei_number 					= $book_imei_number ;
-							$book->author_review 				= $author_review ;
-							$book->cover_url 					= $cover_url ;
-							$book->book_url 					= $cover_content ;
-							$book->user_id 						= auth()->user()->id ;
-							$book->save() ;
+							
+							$chapter_number  = 1 ;
 
 						    while ( false !== ( $original_file = readdir( $handle ) ) ) {
 
@@ -174,7 +281,7 @@ class BookController extends Controller
 										@$doc->loadHTML( substr( $raw_file_content, 0, $percent_of_content ) ) ;
 						        		$chapter_preview_content = $doc->saveHTML() ;
 
-										$request->session()->flash('status', 'Successfully added a new book: \''.$book_title.'\'!') ;
+										
 
 										$speech = new TextToSpeech() ;
 										$speech->withLanguage('en-us')->inPath( $new_generated_path . '/audio/') ;
@@ -188,17 +295,22 @@ class BookController extends Controller
 										    $speech->download( substr( $download_tts, 0, 200 ) ) ;
 										    
 										    $audio_path = $speech->getCompletePath() ;
-										}
 
-						        		$chapter 				= new Chapter ;
-										$chapter->name 			= $original_file ;
-										$chapter->file_name 	= asset( '/uploads/' .$path_to_store_chapters . $original_file ) ;
-										$chapter->raw_content 	= $raw_file_content ;
-										$chapter->text_content 	= $file_content_tags ;
-										$chapter->chapter_preview_content 	= $chapter_preview_content ;
-										$chapter->book_id 		= $book->id ;
-										$chapter->audio_url 	= $audio_path ;
-										$chapter->save() ;
+							        		$chapter 				= new Chapter ;
+											$chapter->name 			= $original_file ;
+											$chapter->file_name 	= asset( '/uploads/' .$path_to_store_chapters . $original_file ) ;
+											$chapter->raw_content 	= $raw_file_content ;
+											$chapter->text_content 	= $file_content_tags ;
+											$chapter->chapter_preview_content 	= $chapter_preview_content ;
+											$chapter->book_id 		= $book->id ;
+											$chapter->audio_url 	= $audio_path ;
+											$chapter->chapter_number= $chapter_number ;
+											$chapter->save() ;
+										    
+										    $chapter_number++ ;
+										}
+										
+										$request->session()->flash('status', 'Successfully added a new EPUB book: \''.$book_title.'\'!') ;
 
 						        	}
 						            
@@ -218,7 +330,7 @@ class BookController extends Controller
 			} else {
 				$source = new \Gufy\PdfToHtml\Base ;
 				
-				$pdf_storage_directory = public_path() . '/' . $book_title . "/PDF/" ;
+				$pdf_storage_directory = public_path() . '/uploads/temp_pages/' . $book_title . "/PDF/" ;
 
 		        if ( !file_exists( $pdf_storage_directory ) )
 		            mkdir( $pdf_storage_directory, 0777, true ) ;
@@ -241,20 +353,26 @@ class BookController extends Controller
 						$image_updated_content = file_get_contents( $pdf_storage_directory . "/index.html" ) ;
 						$number_of_pdf_pages = $this->getNumberOfPages( $image_updated_content ) ;
 
-						dump( $number_of_pdf_pages ) ;
-
 						$pages = $this->getIndividualPages( $image_updated_content, $number_of_pdf_pages ) ;
 						$styles = $this->getIndividualPageStyles( $image_updated_content, $number_of_pdf_pages ) ;
+						
+						for ($i=0; $i < $number_of_pdf_pages; $i++) { 
 
-						dump( $pages ) ;
-						dump( $styles ) ;
+							$temp_page 						= new TempPage ;
+							$temp_page->raw_html 			= $pages[$i] ;
+							$temp_page->raw_css 			= $styles[$i] ;
+							$temp_page->book_id 			= $book->id ;
+							$temp_page->save() ;
+
+						}
+						
+						$request->session()->flash( 'status', 'Successfully added a new PDF book: \''.$book_title.'\', approval needed by admin' ) ;
+
 					}
 
 				} else {
 					//
 				}
-				
-				die("PDF - EPUB.") ;
 				
 			}		
 
@@ -301,7 +419,7 @@ class BookController extends Controller
 
 			if ( $div->getAttribute( "id" ) == "page" . $page_number . "-div" ) {
 
-				$page = 'div id="page' . $page_number.'-div" style="position:relative;width:918px;height:1188px;">' . $this->DOMinnerHTML($div) .  '</div' ;
+				$page = '<div id="page' . $page_number.'-div" style="position:relative;width:918px;height:1188px;">' . $this->DOMinnerHTML($div) .  '</div>' ;
 				array_push( $pages, $page ) ;
 
 			}

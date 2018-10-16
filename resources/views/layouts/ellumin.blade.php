@@ -15,6 +15,23 @@
     <link rel="stylesheet" href="{{ asset('css/ellumin.css') }}">   
 	<link rel="stylesheet" href="{{ asset('css/icons.css') }}">	
 
+    @yield('css')
+  
+    <style>
+        
+        textarea
+        {
+          width:100%;
+        }
+        .textwrapper
+        {
+          border:1px solid #999999;
+          margin:5px 0;
+          padding:3px;
+        }        
+
+    </style>
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -179,7 +196,14 @@
           </a>
         </li>
 		  
-		
+        <li class="header nav-small-cap"><i class="mdi mdi-drag-horizontal mr-5"></i>ADMIN</li>
+      
+        <li>
+          <a href="{{ url( 'pending_books' ) }}">
+            <i class="mdi mdi-view-dashboard"></i>
+            <span>{{ __('Pending Approval') }}</span>
+          </a>
+        </li>		
         
       </ul>
     </section>
@@ -210,6 +234,8 @@
 
     <script src="{{ asset( 'js/app.js' ) }}"></script>
 	<script src="{{ asset( 'js/ellumin.js' ) }}"></script>
+
+    @yield('js')
 
 	
 
