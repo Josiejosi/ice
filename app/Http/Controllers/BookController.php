@@ -24,9 +24,9 @@ class BookController extends Controller
 		    // Merchant details
 		    'merchant_id' => '12966341',
 		    'merchant_key' => '5018xj78swngr',
-		    'return_url' => 'http://app.ellumin.test/payment/return',
-		    'cancel_url' => 'http://app.ellumin.test/payment/cancel',
-		    'notify_url' => 'http://app.ellumin.test/payment/notify',
+		    'return_url' => url('/') . '/payment/return',
+		    'cancel_url' => url('/') . '/payment/cancel',
+		    'notify_url' => url('/') . '/payment/notify',
 		    // Buyer details
 		    'name_first' => 'Tebogo',
 		    'name_last'  => 'Sewape',
