@@ -34,7 +34,7 @@ class PaymentController extends Controller
 		    // Amount needs to be in ZAR
 		    // If multicurrency system its conversion has to be done before building this array
 		    'amount' => number_format( sprintf( "%.2f", 25 ), 2, '.', '' ),
-		    'item_name' => $chapter . " - " . $title,
+		    'item_name' => "Chapter " . $chapter . " - " . $title,
 		    'item_description' => $title,
 		    'custom_int1' => rand( 1111111111,999999999 ), //custom integer to be passed through           
 		    'custom_str1' => "Chapter " . $chapter . " - " . $title
