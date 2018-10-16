@@ -33,11 +33,11 @@ class PaymentController extends Controller
 		    'm_payment_id' => rand( 1111111111,999999999 ), //Unique payment ID to pass through to notify_url
 		    // Amount needs to be in ZAR
 		    // If multicurrency system its conversion has to be done before building this array
-		    'amount' => number_format( sprintf( "%.2f", 5 ), 2, '.', '' ),
+		    'amount' => number_format( sprintf( "%.2f", 25 ), 2, '.', '' ),
 		    'item_name' => $chapter . " - " . $title,
 		    'item_description' => $title,
 		    'custom_int1' => rand( 1111111111,999999999 ), //custom integer to be passed through           
-		    'custom_str1' => $chapter . " - " . $title
+		    'custom_str1' => "Chapter " . $chapter . " - " . $title
 		] ;   
 
 		$pfOutput  = "" ;     

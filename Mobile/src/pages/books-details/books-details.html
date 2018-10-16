@@ -26,10 +26,10 @@
 </ion-grid>
 <ion-list>
 <ion-item  *ngFor="let chapter of chapters;">
-<h5>{{ (chapter.name ).slice(0, -5) }}</h5>
-<p>{{ ((chapter.raw_content).length / 350.5) }} Page(s)</p>
-<button ion-button round outline small color="ellumiate" item-end tappable (click)="preview(chapter.chapter_preview_content, selected_book.title, (chapter.name ).slice(0, -5));">Preview</button>
-<button ion-button round outline small color="ellumiate" item-end tappable (click)="download( (chapter.name ).slice(0, -5), selected_book.title  );">Download</button>
+<h5>{{ chapter.name }} Chapter</h5>
+<p>{{ chapter.chapter_number }} Page(s)</p>
+<button ion-button round outline small color="ellumiate" item-end tappable (click)="preview(chapter.chapter_preview_content, selected_book.title,chapter.name );">Preview</button>
+<button ion-button round outline small color="ellumiate" item-end tappable (click)="download( chapter.name, selected_book.title  );">Download</button>
 </ion-item>
 </ion-list>
 </ion-content>
