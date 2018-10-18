@@ -70,7 +70,7 @@ class APIController extends Controller
     	
     	header( "Access-Control-Allow-Origin: *" ) ;
 
-	    return Book::all() ;
+	    return Book::where( 'status', 1 )->get() ;
 
 	}
 
