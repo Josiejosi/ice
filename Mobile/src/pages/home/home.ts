@@ -54,16 +54,19 @@ export class HomePage {
 
 				if ( "message" in data ) {
 
-		    		let message = "Wrong combination, Please try with valid credentials" ;
-
-			    	const toast = this.toastCtrl.create({ message: message, duration: 6000 }) ;
+			    	const toast = this.toastCtrl.create({ message: data.message + " for search '"+this.search_criteria+"'", duration: 6000 }) ;
 		    		toast.present() ;
 
-		    		this.loadAllBooks() ;	
+		    		this.loadAllBooks() ;
 
 				} else {
 
-					this.loadAllBooks() ;
+					this.search_criteria = "" ;
+
+					this.books = data ;	
+
+			    	const toast = this.toastCtrl.create({ message: data.length + " books found.", duration: 6000 }) ;
+		    		toast.present() ;
 
 				}
 
@@ -77,6 +80,7 @@ export class HomePage {
 
 		} else {
 			this.loadAllBooks() ;
+			loader.dismiss() ;
 		}
 	}
 
@@ -130,9 +134,9 @@ export class HomePage {
 
         this.storage.get( 'profile' ).then( profile => {
 
-            if ( profile != null ) {
+            if ( profile != null || typeof(profile) != "undefined" ) {
 
-                this.fullname = profile.fullname ;
+                //this.fullname = profile.fullname ;
             }
 
         }) ; 

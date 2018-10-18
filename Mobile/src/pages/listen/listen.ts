@@ -19,6 +19,8 @@ export class ListenPage {
 	sound: any ;
 	audio: any ;
 
+	loadProgress: number = 5 ;
+
 	play_url: string = "http://169.60.182.182/uploads/books/publisher_id_2/" ;
 
 	constructor( 

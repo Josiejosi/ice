@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
-/**
- * Generated class for the FullChapterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { ListenPage } from '../listen/listen';
+
+import { NotesPage } from '../notes/notes';
 
 @Component({
 	selector: 'page-full-chapter',
@@ -14,15 +11,32 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class FullChapterPage {
 
+	title: any ;
+	sound: any ;
 	content: any ;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor( public navCtrl: NavController, public navParams: NavParams, public modalCtrl : ModalController ) {
+	}
+
+	PlaySound( content ) {
+
+		this.navCtrl.push( ListenPage, {  book: content, title: this.title, sound: this.sound } ) ;
+
+	}
+
+	public openModal() {
+
+	    let data = { title : this.title } ;
+	    let modalPage = this.modalCtrl.create( 'NotesPage', data ) ;
+	    modalPage.present() ;
+	    
 	}
 
 	ionViewDidLoad() {
 		
-		this.content = this.navParams.get( 'param1' ) ;
-		console.log( this.content ) ;
+		this.content = this.navParams.get( 'book' ) ;
+		this.title = this.navParams.get( 'title' ) ;
+		this.sound = this.navParams.get( 'sound' ) ;
 
 	}
 

@@ -23,6 +23,14 @@ import { AddProfilePage } from '../pages/add-profile/add-profile';
 import { AddStudiesPage } from '../pages/add-studies/add-studies';
 import { FirstLoginPage } from '../pages/first-login/first-login';
 
+
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+import { BooksPage } from '../pages/books/books'; //NotesPage
+
+import { NotesPage } from '../pages/notes/notes';
+
+import { TabsPage } from '../pages/tabs/tabs';
+
 import { ProgressBarComponent } from '../components/progress-bar/progress-bar';
 
 import { HttpModule } from '@angular/http';
@@ -41,8 +49,13 @@ import { GlobalsProvider } from '../providers/globals/globals';
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { SanitizeHtmlPipe } from '../pipes/sanitize-html/sanitize-html';
+
+
 @NgModule({
   declarations: [
+    SanitizeHtmlPipe,
+
     MyApp,
     HomePage,
     LoginPage,
@@ -61,7 +74,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
     AddProfilePage,
     FirstLoginPage,
     AddStudiesPage,
-    ProgressBarComponent
+    ProgressBarComponent,
+    TabsPage,
+    BookmarksPage,
+    BooksPage,
+    NotesPage
   ],
   imports: [
     BrowserModule,
@@ -75,6 +92,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+
+    //SanitizeHtmlPipe,
+
     MyApp,
     HomePage,
     LoginPage,
@@ -93,7 +113,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
     AddProfilePage,
     FirstLoginPage,
     AddStudiesPage,
-    ProgressBarComponent
+    ProgressBarComponent,
+    TabsPage,
+    BookmarksPage,
+    BooksPage,
+    NotesPage
     
   ],
   providers: [

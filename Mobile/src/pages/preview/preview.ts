@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { ListenPage } from '../listen/listen';
+
+import { NotesPage } from '../notes/notes';
+
 
 @Component({
   selector: 'page-preview',
@@ -13,7 +16,7 @@ export class PreviewPage {
 	sound: any ;
 	content: any ;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor( public navCtrl: NavController, public navParams: NavParams, public modalCtrl : ModalController ) {
 	}
 
 	PlaySound( content ) {
@@ -22,7 +25,13 @@ export class PreviewPage {
 
 	}
 
+	public openModal() {
 
+	    let data = { title : this.title } ;
+	    let modalPage = this.modalCtrl.create( NotesPage, data ) ;
+	    modalPage.present() ;
+	    
+	}
 
 	ionViewDidLoad() {
 		

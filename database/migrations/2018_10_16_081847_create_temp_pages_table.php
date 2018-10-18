@@ -17,6 +17,7 @@ class CreateTempPagesTable extends Migration
             $table->increments('id');
             $table->longText('raw_html');
             $table->longText('raw_css');
+            $table->integer('page_number') ;
             $table->integer('book_id')->unsigned();
             $table->timestamps();
             

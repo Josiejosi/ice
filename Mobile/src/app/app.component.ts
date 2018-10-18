@@ -9,6 +9,12 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
 
+import { BookmarksPage } from '../pages/bookmarks/bookmarks';
+import { BooksPage } from '../pages/books/books';
+
+
+import { TabsPage } from '../pages/tabs/tabs';
+
 import { MainPage } from '../pages/main/main';
 
 export interface MenuItem {
@@ -32,26 +38,38 @@ export class MyApp {
 
     pro_pic: any = "assets/imgs/avatar1.png" ;
 
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public storage: Storage) {
+    constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, public storage: Storage) {
 
-        platform.ready().then(() => {
+        this.initializeApp() ;
+
+        this.appMenuItems = [
+            {title: 'Home', component: HomePage, icon: 'home'},
+            {title: 'Bookmarks', component: BookmarksPage, icon: 'bookmark'},
+            {title: 'Books', component: BooksPage, icon: 'book'},
+            {title: 'Edit Profile', component: ProfilePage, icon: 'person'}
+        ];
+    }
+
+    initializeApp() {
+
+        this.platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
-            splashScreen.hide();
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
 
-            storage.get( 'pro_pic' ).then( propic => {
-                if ( propic != null ) {
+            this.storage.get( 'pro_pic' ).then( propic => {
+                if ( propic != null  ) {
                     this.pro_pic = propic ;
                 }
             }) ;
-            storage.get( 'profile' ).then( profile => {
+            this.storage.get( 'profile' ).then( profile => {
 
                 if ( profile != null ) {
 
-                    this.fullname = profile.fullname ;
+                    //this.fullname = profile.fullname ;
 
-                    this.rootPage = HomePage ;
+                    this.rootPage = TabsPage ;
                 } else {
                     this.rootPage = MainPage ;
                 }
@@ -59,7 +77,7 @@ export class MyApp {
             }) ; 
 
         });
-        
+
     }
 
     openPage(page) {

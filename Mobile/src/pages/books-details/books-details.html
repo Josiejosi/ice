@@ -1,12 +1,13 @@
 <ion-header>
 <ion-navbar  color="ellumiate">
-<ion-title>{{ selected_book.title }}</ion-title>
+<ion-title text-center>{{ selected_book.title }}</ion-title>
 </ion-navbar>
 </ion-header>
 <ion-content padding class="common-bg">
 <ion-grid class="card" padding>
 <ion-row>
-<ion-col width-50><img src="{{ assets_directory }}{{ selected_book.cover_url }}" width="85"></ion-col>
+<!--<ion-col width-50><img src="{{ assets_directory }}{{ selected_book.cover_url }}" width="85"></ion-col>-->
+<ion-col width-50><img src="assets/imgs/1.jpg" width="85"></ion-col>
 <ion-col width-50>
 <h4 class="location text-dark">{{ selected_book.title }}</h4>
 </ion-col>
@@ -26,10 +27,12 @@
 </ion-grid>
 <ion-list>
 <ion-item  *ngFor="let chapter of chapters;">
-<h5>{{ chapter.name }} Chapter</h5>
+<div class="numbering-chapters" item-start>
+	<span class="small-text">Chapter</span><br><span class="large-chapter-text">{{ chapter.name }}</span>
+</div>
 <p>{{ chapter.chapter_number }} Page(s)</p>
-<button ion-button round outline small color="ellumiate" item-end tappable (click)="preview(chapter.chapter_preview_content, selected_book.title,chapter.name );">Preview</button>
-<button ion-button round outline small color="ellumiate" item-end tappable (click)="download( chapter.name, selected_book.title  );">Download</button>
+<button ion-button round small small-text color="ellumiate" item-end tappable (click)="preview(chapter.chapter_preview_content, selected_book.title,chapter.name );">Preview</button>
+<button ion-button round outline small-text small color="ellumiate" item-end tappable (click)="download( chapter.name, selected_book.title  );">Download</button>
 </ion-item>
 </ion-list>
 </ion-content>

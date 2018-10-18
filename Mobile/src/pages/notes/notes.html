@@ -1,0 +1,19 @@
+<ion-header>
+<ion-navbar color="ellumiate">
+<ion-title>Add a notes</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+<ion-item>
+<ion-textarea placeholder="Type your notes here"
+[(ngModel)]="note" name="note" style="width:100%; height: 100%;"></ion-textarea>
+</ion-item>
+</ion-content>
+<ion-footer padding>
+<ion-toolbar color="dark">
+<div class="btn-wrapper">
+	<button ion-button float-start small color="danger" (click)="closeModal()">Close</button>
+	<button ion-button float-end small color="secondary" (click)="SavaData()">Save</button>
+</div>
+</ion-toolbar>
+</ion-footer>

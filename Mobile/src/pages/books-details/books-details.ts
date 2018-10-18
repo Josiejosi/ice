@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,ToastController, LoadingController, PopoverController } from 'ionic-angular';
+import { NavController, NavParams,ToastController, LoadingController, PopoverController, ModalController } from 'ionic-angular';
 
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -31,12 +31,17 @@ export class BooksDetailsPage {
 		public toastCtrl: ToastController,
 		public loadingCtrl: LoadingController,
 		public inappbrowser: InAppBrowser,
+		public modalCtrl : ModalController,
 		public http: Http
 		) {
 	}
 
 	viewChapters(book_id) {
 		this.navCtrl.push( ChaptersPage, {  book: book_id } ) ;
+	}
+
+	public openModal(){
+
 	}
 
 	preview( content, book_title, file_name ) {

@@ -22,6 +22,7 @@ class CreateChaptersTable extends Migration
             $table->longText('text_content');
             $table->longText('chapter_preview_content');
             $table->integer('chapter_number') ;
+            $table->integer('number_of_pages') ;
             $table->integer('book_id')->unsigned();
             $table->timestamps();
 
