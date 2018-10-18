@@ -57,21 +57,18 @@
 
 	                        <select id="start_page" class="form-control pl-15" name="start_page" placeholder="Create new PDF Chapter">
 								<option disabled="true">Start Page</option>
-	                            <?php 
-	                                for ( $i=1; $i < count( $pages) + 1; $i++ ) { 
-	                                    echo "<option value='$i'>Pages $i</option>" ;
-	                                }
-	                            ?>
+
+                                @foreach( $pages as $page )
+                                	<option value='{{ $page->id }}'>Pages {{ $page->page_number }}</option>
+                                @endforeach	                           
 	                        </select>
 
 
 	                        <select id="end_page" class="form-control pl-15" name="end_page" placeholder="Create new PDF Chapter">
 								<option disabled="true">End Page</option>
-	                            <?php 
-	                                for ( $i=1; $i < count( $pages) + 1; $i++ ) { 
-	                                    echo "<option value='$i'>Pages $i</option>" ;
-	                                }
-	                            ?>
+                                @foreach( $pages as $page )
+                                	<option value='{{ $page->id }}'>Pages {{ $page->page_number }}</option>
+                                @endforeach	 
 	                        </select>
 
 	                        <input type="text" name="chapter_name" class="form-control pl-15"  placeholder="Chapter Name">
