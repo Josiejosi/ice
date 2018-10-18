@@ -103,7 +103,7 @@ class PDFController extends Controller
 
 		$chapter_preview_content_count 		= 0 ;
 
-		while ( $start_page == $end_page ) { 
+		for ( $i=0; $i<$number_of_pages; $i++ ) { 
 			//TempPage
 
 			$page 							= TempPage::find( $start_page ) ;

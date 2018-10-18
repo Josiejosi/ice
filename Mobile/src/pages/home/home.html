@@ -43,7 +43,7 @@
 	<div class="scrollmenu" *ngFor="let book of books;" (click)="selectBook(book);">
 		<a href="#">
 			<!--<img src="{{ assets_directory }}{{ book.cover_url }}" width="85">-->
-			<img src="assets/imgs/1.jpg" width="85">
+			<img src="{{ assets_directory }}{{ book.cover_url }}" width="85">
 			<br><span class="title">{{ book.title }}</span>
 			<br><span class="author">{{ book.author }}</span>
 		</a>

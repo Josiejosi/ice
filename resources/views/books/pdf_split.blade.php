@@ -11,6 +11,34 @@
                 	<div class="col-6 col-offset-3 text-center">
                 		<a type="submit" class="btn btn-warning btn-block margin-top-10">{{ __('Preview Book') }}</a>
                 	</div>
+	
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Chapters captured.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ( count( $chapters ) )
+                                @foreach( $chapters as $chapter )
+                                <tr>
+                                    <td>
+                                        <span class="text-center">Chapter {{ $chapter->chapter_number }}</span>
+                                    </td>
+                                    <td>{{ $chapter->name }}</td>
+                                    <td>Page(s) {{ $chapter->number_of_pages }}</td>
+                                </tr>
+                                @endforeach
+                                @else
+                                    <td colspan="5">
+                                        <span class="text-center">0 Chapters</span>
+                                    </td>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
                     <form action="{{ url('/pdf/chapter/create') }}" method="post" class="form-element">
                         @csrf
 	                    <div class="form-group">
@@ -30,7 +58,7 @@
 	                        <select id="start_page" class="form-control pl-15" name="start_page" placeholder="Create new PDF Chapter">
 								<option disabled="true">Start Page</option>
 	                            <?php 
-	                                for ( $i=1; $i < count( $pages); $i++ ) { 
+	                                for ( $i=1; $i < count( $pages) + 1; $i++ ) { 
 	                                    echo "<option value='$i'>Pages $i</option>" ;
 	                                }
 	                            ?>
@@ -40,7 +68,7 @@
 	                        <select id="end_page" class="form-control pl-15" name="end_page" placeholder="Create new PDF Chapter">
 								<option disabled="true">End Page</option>
 	                            <?php 
-	                                for ( $i=1; $i < count( $pages); $i++ ) { 
+	                                for ( $i=1; $i < count( $pages) + 1; $i++ ) { 
 	                                    echo "<option value='$i'>Pages $i</option>" ;
 	                                }
 	                            ?>
