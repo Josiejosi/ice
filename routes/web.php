@@ -29,6 +29,11 @@ Route::get('/text_to_speach', 'BookController@text_to_speach');
 
 Route::get('/pay/{chapter}/{title}', 'PaymentController@pay');
 
+Route::get('/pdf/split/{id}', 'PDFController@pdf_split') ;//create_chapter
+Route::post('/pdf/chapter/create', 'PDFController@create_chapter') ;
+
+Route::get('/epub/approve/{id}', 'EPUBController@epub_approve') ;
+
 Route::get('/payment/return', 'PaymentController@return') ;
 Route::get('/payment/cancel', 'PaymentController@cancel') ;
 Route::get('/payment/notify', 'PaymentController@notify') ;

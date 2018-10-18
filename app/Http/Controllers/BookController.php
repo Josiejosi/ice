@@ -237,6 +237,7 @@ class BookController extends Controller
 			$book->cover_url 								= $cover_url ;
 			$book->book_url 								= $cover_content ;//status
 			$book->status 									= false ;
+			$book->extension 								= $extension ;
 			$book->user_id 									= auth()->user()->id ;
 			$book->save() ;
 
@@ -304,7 +305,8 @@ class BookController extends Controller
 											$chapter->chapter_preview_content 	= $chapter_preview_content ;
 											$chapter->book_id 		= $book->id ;
 											$chapter->audio_url 	= $audio_path ;
-											$chapter->chapter_number= $chapter_number ;
+											$chapter->chapter_number= $chapter_number ;//number_of_pages
+											$chapter->number_of_pages 	= rand( 5, 50) ;
 											$chapter->save() ;
 										    
 										    $chapter_number++ ;
@@ -356,12 +358,13 @@ class BookController extends Controller
 						$pages = $this->getIndividualPages( $image_updated_content, $number_of_pdf_pages ) ;
 						$styles = $this->getIndividualPageStyles( $image_updated_content, $number_of_pdf_pages ) ;
 						
-						for ($i=0; $i < $number_of_pdf_pages; $i++) { 
+						for ( $i=0; $i < $number_of_pdf_pages; $i++) { 
 
 							$temp_page 						= new TempPage ;
 							$temp_page->raw_html 			= $pages[$i] ;
 							$temp_page->raw_css 			= $styles[$i] ;
-							$temp_page->book_id 			= $book->id ;
+							$temp_page->book_id 			= $book->id ;//page_number
+							$temp_page->page_number 		= ( $i+1 ) ;
 							$temp_page->save() ;
 
 						}
