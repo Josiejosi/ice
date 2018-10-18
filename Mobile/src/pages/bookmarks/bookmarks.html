@@ -9,5 +9,14 @@
 </ion-navbar>
 </ion-header>
 <ion-content padding>
-<h1 text-center>No new Bookmarks yet.</h1>
+<ion-list>
+<ion-item *ngFor="let book of books;">
+<ion-thumbnail item-start>
+<img src="{{ assets_directory }}{{ book.cover_url }}">
+</ion-thumbnail>
+<h2>{{ book.title }}</h2>
+<p>{{ book.author }}</p>
+<button ion-button clear item-end>{{ number_of_pages }} Chapters</button>
+</ion-item>
+</ion-list>
 </ion-content>

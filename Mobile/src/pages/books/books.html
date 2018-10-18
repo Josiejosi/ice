@@ -10,13 +10,14 @@
 </ion-header>
 <ion-content padding>
 <ion-list>
-<ion-item>
+<ion-item *ngFor="let book of books;">
 <ion-thumbnail item-start>
-<img src="assets/imgs/1.jpg">
+<img src="{{ assets_directory }}{{ book.cover_url }}">
 </ion-thumbnail>
-<h2>Doctrine ORM</h2>
-<p>7 Oct 2018</p>
-<button ion-button clear item-end>2 Chapters</button>
+<h2>{{ book.title }}</h2>
+<p>{{ book.author }}</p>
+<button ion-button round small small-text color="ellumiate" item-end tappable (click)="preview(book);">Preview</button>
+<button ion-button round outline small-text small color="ellumiate" item-end tappable (click)="download(book);">Download</button>
 </ion-item>
 </ion-list>
 </ion-content>

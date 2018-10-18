@@ -67,7 +67,18 @@ export class AddStudiesPage {
 
 		    		let profile = {
 						fullname: this.fullname,
-						email: this.email
+						age: this.age,
+						cell_phone_number: this.cell_phone_number,
+						gender: this.gender,
+						province: this.province,
+						type_of_study: this.type_of_study,
+						institution: this.institution,
+						field_of_study: this.field_of_study,
+						email: this.email,
+						password: this.password,
+						surname: this.surname,
+						dob: this.dob,
+
 		    		} ;
 
 		    		this.storage.set( 'profile', profile ) ; 

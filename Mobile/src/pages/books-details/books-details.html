@@ -32,8 +32,8 @@
 </div>
 <h3>{{ chapter.name }}</h3>
 <p>{{ chapter.number_of_pages }} Page(s)</p>
-<button ion-button round small small-text color="ellumiate" item-end tappable (click)="preview(chapter.chapter_preview_content, selected_book.title,chapter.name );">Preview</button>
-<button ion-button round outline small-text small color="ellumiate" item-end tappable (click)="download( chapter.name, selected_book.title  );">Download</button>
+<button ion-button round small small-text color="ellumiate" item-end tappable (click)="preview( chapter, selected_book );">Preview</button>
+<button ion-button round outline small-text small color="ellumiate" item-end tappable (click)="download( chapter, selected_book  );">Download</button>
 </ion-item>
 </ion-list>
 </ion-content>

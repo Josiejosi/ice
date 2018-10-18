@@ -37,36 +37,26 @@ export class AddProfilePage {
 	}
 	
  //take Photo
-  takePhoto(sourceType:number) {
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      sourceType:sourceType,
-    }
+	takePhoto(sourceType:number) {
+	    const options: CameraOptions = {
+	      quality: 50,
+	      destinationType: this.camera.DestinationType.DATA_URL,
+	      encodingType: this.camera.EncodingType.JPEG,
+	      mediaType: this.camera.MediaType.PICTURE,
+	      correctOrientation: true,
+	      sourceType:sourceType,
+	    }
 
-    this.camera.getPicture(options).then((imageData) => {
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.pro_pic=base64Image;
-      this.storage.set( 'pro_pic', base64Image ) ;
-    }, (err) => { console.log(err) ; });
-  }
+	    this.camera.getPicture(options).then((imageData) => {
+	      let base64Image = 'data:image/jpeg;base64,' + imageData;
+	      this.pro_pic=base64Image;
+	      this.storage.set( 'pro_pic', base64Image ) ;
+	    }, (err) => { console.log(err) ; });
+	}
 
 
-	handleFileSelect(evt){
+	handleFileSelect(evt) {
 		this.takePhoto( 0 ) ;
-	    // var files = evt.target.files;
-	    // var file = files[0];
-
-	    // if (files && file) {
-	    //     var reader = new FileReader();
-
-	    //     reader.onload =this._handleReaderLoaded.bind(this);
-
-	    //     reader.readAsBinaryString(file);
-	    // }
 	}
 
 	_handleReaderLoaded(readerEvt) {

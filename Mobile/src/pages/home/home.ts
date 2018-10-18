@@ -48,8 +48,6 @@ export class HomePage {
 
 		if ( this.search_criteria != "" ) {
 
-			console.log( this.filter_books_url + this.search_criteria ) ;
-
 			this.http.get( this.filter_books_url + this.search_criteria ).map( res => res.json() ).subscribe( data => { 
 
 				if ( "message" in data ) {
@@ -69,8 +67,6 @@ export class HomePage {
 		    		toast.present() ;
 
 				}
-
-				console.log(data) ;
 
 			    loader.dismiss() ;
 
@@ -113,7 +109,6 @@ export class HomePage {
 		loades.map( res => res.json() ).subscribe( data => { 
 
 			this.books = data ;
-			console.log(data) ;
 
 		    loader.dismiss() ;
 
@@ -134,9 +129,10 @@ export class HomePage {
 
         this.storage.get( 'profile' ).then( profile => {
 
-            if ( profile != null || typeof(profile) != "undefined" ) {
+            if ( profile != null  ) {
 
-                //this.fullname = profile.fullname ;
+                this.fullname = profile.fullname  ;
+
             }
 
         }) ; 

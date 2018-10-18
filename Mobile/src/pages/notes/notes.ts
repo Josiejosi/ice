@@ -43,7 +43,7 @@ export class NotesPage {
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad NotesPage');
+		
 	}
 
 }

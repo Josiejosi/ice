@@ -6,6 +6,8 @@ import { ResetPage } from '../reset/reset';
 
 import { HomePage } from '../home/home';
 
+import { TabsPage } from '../tabs/tabs';
+
 import { Storage } from '@ionic/storage';
 
 import {Http} from '@angular/http';
@@ -61,7 +63,7 @@ export class LoginPage {
 
 		    } else {
 
-		    	let alert_message = "Welcome back to E-llumin8" ;
+		    	let alert_message = "Welcome back "+data.name+", to E-llumin8" ;
 
 		    	const toast = this.toastCtrl.create({ message: alert_message, duration: 6000 }) ;
 	    		toast.present() ;
@@ -71,10 +73,21 @@ export class LoginPage {
 					email: data.email
 	    		} ;
 
-	    		this.storage.set( 'profile', profile ) ; 
+	    		this.storage.get( 'profile' ).then( profile => {
 
-	    		this.navCtrl.setRoot( HomePage ) ;
+	    			if  ( profile != null ) {
 
+	    				this.navCtrl.setRoot( TabsPage ) ;
+
+	    			} else {
+
+	    				this.navCtrl.setRoot( TabsPage ) ;
+
+	    				this.storage.set( 'profile', profile ) ;
+
+	    			}
+
+	    		})
 
 		    }
 

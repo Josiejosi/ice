@@ -8,6 +8,8 @@ import { PreviewPage } from '../preview/preview';
 import { ListenPage } from '../listen/listen';
 import { FullChapterPage } from '../full-chapter/full-chapter';
 
+import { Storage } from '@ionic/storage';
+
 @Component({
 	selector: 'page-chapters',
 	templateUrl: 'chapters.html',
@@ -26,6 +28,7 @@ export class ChaptersPage {
 		public toastCtrl: ToastController,
 		public loadingCtrl: LoadingController,
 		public http: Http,
+		private storage: Storage,
 		public navParams: NavParams
 		) {
 	}

@@ -67,7 +67,7 @@ export class MyApp {
 
                 if ( profile != null ) {
 
-                    //this.fullname = profile.fullname ;
+                    this.fullname = profile.fullname + " " + profile.surname ;
 
                     this.rootPage = TabsPage ;
                 } else {

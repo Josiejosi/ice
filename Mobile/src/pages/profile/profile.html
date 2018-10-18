@@ -1,7 +1,29 @@
 <ion-header>
 <ion-navbar color="ellumiate">
-<ion-title text-center>Profile</ion-title>
+<h4 class="text-center" text-center style="color: white !important;">Profile</h4>
 </ion-navbar>
+<ion-toolbar  color="ellumiate">
+<div class="user-avatar text-center" text-center>
+	<div class="image-upload">
+		<label for="file-input">
+			<img [src]="pro_pic" width="100px" />
+			
+		</label>
+		<input id="file-input"  accept="image/*"  [(ngModel)]="file_upload" type="file" (change)='handleFileSelect($event)' />
+	</div>
+	<p class="text-center" style="color: white !important;">{{fullname}} {{surname}}</p>
+	<p class="text-center" style="color: white !important;">{{gender}} <ion-icon name="transgender"></ion-icon></p>
+</div>
+</ion-toolbar>
+<ion-toolbar text-center>
+<ion-grid>
+<ion-row>
+<ion-col col-4><h4 class="text-center">0</h4><span class="small-text">Book selected</span></ion-col>
+<ion-col col-4><h4 class="text-center">0</h4><span class="small-text">Chapters Read</span></ion-col>
+<ion-col col-4><h4 class="text-center">0 MB</h4><span class="small-text">Used out of 250MB</span></ion-col>
+</ion-row>
+</ion-grid>
+</ion-toolbar>
 </ion-header>
 <ion-content padding>
 <!-- Login form -->
@@ -9,6 +31,10 @@
 	<ion-item>
 	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Full Name</ion-label>
 	<ion-input type="text" [(ngModel)]="fullname" name="fullname"></ion-input>
+	</ion-item>
+	<ion-item>
+	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Surname</ion-label>
+	<ion-input type="text" [(ngModel)]="surname" name="surname"></ion-input>
 	</ion-item>
 	<ion-item>
 	<ion-label floating><ion-icon name="person" item-start class="text-primary"></ion-icon>Age</ion-label>
@@ -48,6 +74,6 @@
 	</ion-item>
 </form>
 <div margin-top>
-	<button ion-button block color="danger" tappable (click)="register();">UPDATE</button>
+	<button ion-button block color="danger" tappable (click)="update_profile();">UPDATE</button>
 </div>
 </ion-content>
