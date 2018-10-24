@@ -52,6 +52,10 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 		this.api_url = global.api_url ;
 	}
 
+    EventExists( events, event_id ) {
+        return events.some( function(el) { return el.event_id === event_id ; } );
+    }
+
 	viewChapters(book_id) {
 
 		this.navCtrl.push( ChaptersPage, {  book: book_id } ) ;
@@ -113,17 +117,52 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	        	this.purchasedChapter( purchase_chapter ) ;
 	        	
-	         	setInterval( function() { 
+	         	setInterval( function() {
 
-	         		let purchased_book = {
-	         			book_id: selected_book.id
-	         		} ;
+	         		let purchased_books: any = [] ;
 
-	         		this.storage.set( 'purchased_book', purchased_book ).then( () => {
+			        this.storage.ready().then( () => {   
 
-	         			browser.close() ; 
+			           	this.storage.get( 'books' ).then( ( books ) => {
 
-	         		}) ;
+			                if ( books != null ) {
+
+			                    for( let i = 0; i < books.length; i++ ) {
+
+			                        if ( books[i].book_id != selected_book.id && books[i].chapter_id != chapter.id ) {
+
+			                            purchased_books.push( {
+			                                book_id: books[i].book_id, 
+			                                book_cover: books[i].book_cover, 
+			                                chapter_id: books[i].chapter_id, 
+			                                chapter_content: books[i].chapter_content
+			                            }) ;
+
+			                        }
+			                    }  
+			                }
+
+			            });
+			        }); 
+
+			        purchased_books.push({
+
+	         			book_id: selected_book.id,
+	         			book_cover: selected_book.cover_url,
+	         			chapter_id: chapter.id,
+	         			chapter_content: chapter.raw_content,
+
+			        }) ;
+
+			        this.storage.ready().then( () => {
+
+		         		this.storage.set( 'books', purchased_books ).then( () => {
+
+		         			browser.close() ; 
+
+		         		}) ;
+
+	         		});
 
 
 	         	}, 3000 ) ;
@@ -159,7 +198,7 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	loadAllChapters( book_id ) {
 
-		const loader = this.loadingCtrl.create({content: "Loading chapter..."});
+		const loader = this.loadingCtrl.create({content: "Loading chapter..."}) ;
 		loader.present();
 
 		this.http.get( this.chapter_url + book_id ).map( res => res.json() ).subscribe( data => { 

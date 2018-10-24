@@ -11,8 +11,10 @@
 </ion-buttons>
 </ion-navbar>
 </ion-header>
-<ion-content padding scrollY="true" zoom="true">
+<ion-content padding scrollY="true" zoom="true" overflow-scroll="true">
+<ion-scroll  style="width:100%;overflow-x: scroll" scrollX="true" >
 <div [innerHtml]="content | sanitizeHtml"></div>
+</ion-scroll>
 <ion-fab right bottom>
 <button ion-fab color="ellumiate" (click)="openModal()"><ion-icon name="create"></ion-icon></button>
 </ion-fab>

@@ -75,11 +75,50 @@ class APIController extends Controller
 
 	}
 
-    public function getChapterByBookId( $book_id ) {
+    public function getChapterByBookId( $book_id, $user_id ) {
     	
     	header( "Access-Control-Allow-Origin: *" ) ;
 
-	    return Chapter::whereBookId( $book_id )->get() ;
+	    $chapters = Chapter::whereBookId( $book_id )->get() ;
+
+        $purchased_chapters = PurchaseChapter::whereBookId( $book_id )->whereUserId( $user_id )->get() ;
+
+        $new_chapters = [] ;
+
+        foreach ( $chapters as $chapter ) {
+
+            $is_purchased = false ;
+
+            foreach ( $purchased_chapters as $purchased ) {
+
+                if ( $chapter->id == $purchased->chapter_id ) {
+
+                    $is_purchased = true ;
+
+                    break ;
+                }
+
+            }
+
+            $new_chapters[]                 = [
+
+                'id'                        => $chapter->id,
+                'name'                      => $chapter->name,
+                'file_name'                 => $chapter->file_name,
+                'audio_url'                 => $chapter->audio_url,
+                'raw_content'               => $chapter->raw_content,
+                'text_content'              => $chapter->text_content,
+                'chapter_preview_content'   => $chapter->chapter_preview_content,
+                'chapter_number'            => $chapter->chapter_number,
+                'number_of_pages'           => $chapter->number_of_pages,
+                'book_id'                   => $chapter->book_id,
+                'is_purchased'              => $is_purchased,
+
+            ] ;
+
+        }
+
+        return $new_chapters ;
 
 	}
 

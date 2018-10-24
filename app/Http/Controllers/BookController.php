@@ -67,7 +67,7 @@ class BookController extends Controller
 		    transform: scaleX(-1) scaleY(-1);
 		    filter: fliph + flipv;
 		    }
-		    body { width: 918px; margin: 5px auto; }
+		   
 		    </style>
 		</head>
 		<body bgcolor="#A0A0A0" vlink="blue" link="blue">' ;
@@ -100,7 +100,7 @@ class BookController extends Controller
 		    transform: scaleX(-1) scaleY(-1);
 		    filter: fliph + flipv;
 		    }
-		    body { width: 918px; margin: 5px auto; }
+		    
 		    </style>
 		</head>
 		<body bgcolor="#A0A0A0" vlink="blue" link="blue">' ;
