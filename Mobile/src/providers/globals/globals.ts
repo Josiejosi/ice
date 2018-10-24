@@ -11,6 +11,8 @@ export class GlobalsProvider {
 	public app_url: string = "http://169.60.182.182/" ;
 	public api_url: string = "http://169.60.182.182/api/v1/" ;
 
+	public user_id: number = 1 ;
+
 	constructor() {}
 
 }

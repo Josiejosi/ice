@@ -198,13 +198,17 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	loadAllChapters( book_id ) {
 
+		console.log( "Loading chapters: " + this.chapter_url + book_id + "/" + this.global.user_id ) ; 
+
 		const loader = this.loadingCtrl.create({content: "Loading chapter..."}) ;
 		loader.present();
 
-		this.http.get( this.chapter_url + book_id ).map( res => res.json() ).subscribe( data => { 
+		this.http.get( this.chapter_url + book_id + "/" + this.global.user_id ).map( res => res.json() ).subscribe( data => { 
 
 			this.chapters = data ;
 			this.chapters.sort() ;
+
+			console.log( data ) ; 
 
 		    loader.dismiss() ;
 
@@ -212,22 +216,6 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	}
 
-	setUserID() {
-		let user_url = this.api_url + "user/id/" + this.global.email ;
-
-		this.http.get( user_url ).map( res => res.json() ).subscribe( data => { 
-
-			if ( "message" in data ) {
-
-			} else {
-
-				this.user_id = data.user ;
-				console.log( "User ID: " + this.user_id ) ;
-			}
-
-		});
-
-	}
 
 	purchasedChapter( url ) {
 
@@ -245,7 +233,6 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	ionViewDidLoad() {
 
-		this.setUserID() ;
 
 		this.selected_book = this.navParams.get( 'selected_book' ) ;
 

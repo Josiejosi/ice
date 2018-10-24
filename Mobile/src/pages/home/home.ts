@@ -130,6 +130,36 @@ export class HomePage {
 
 	}
 
+	setUserID() {
+
+		const loader = this.loadingCtrl.create({content: "Please wait..."});
+		loader.present();
+
+		let user_url = this.global.api_url + "user/id/" + this.global.email ;
+
+		this.http.get( user_url ).map( res => res.json() ).subscribe( data => { 
+
+			if ( "message" in data ) {
+
+				loader.dismiss() ;
+
+				console.log( data ) ;
+
+			} else {
+
+				loader.dismiss() ;
+
+				this.global.user_id = data.user ;
+				
+				console.log( "User ID: " + this.global.user_id ) ;
+			}
+
+		}, err => {
+            loader.dismiss() ;
+        }) ;
+
+	}
+
 
 	ionViewDidLoad() {
 
@@ -146,9 +176,13 @@ export class HomePage {
                 this.global.fullname = profile.fullname + " " + profile.surname  ;
                 this.global.email = profile.email ;
 
+                this.setUserID() ; 
+
             }
 
-        }) ; 
+        }) ;
+
+        
 
 		this.loadAllBooks() ;
 
