@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController, PopoverController } from 'ionic-angular';
+import { Component } from '@angular/core' ;
+import { NavController, NavParams, ToastController, LoadingController, PopoverController } from 'ionic-angular' ;
 
-import { NotificationsPage } from '../notifications/notifications';
-import { SettingsPage } from '../settings/settings';
+import { NotificationsPage } from '../notifications/notifications' ;
+import { SettingsPage } from '../settings/settings' ;
 
-import { BooksDetailsPage } from '../books-details/books-details';
+import { BooksDetailsPage } from '../books-details/books-details' ;
 
 import { LoginPage } from '../login/login';
 
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage' ;
 
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
+import {Http} from '@angular/http' ;
+import 'rxjs/add/operator/map' ;
+
+import { GlobalsProvider } from '../../providers/globals/globals' ;
 
 @Component({
 	selector: 'page-home',
@@ -20,10 +22,13 @@ import 'rxjs/add/operator/map';
 export class HomePage {
 
 	search_criteria: string = "" ;
-	fullname: string = "Doe" ;
-	all_books_url: string = "http://169.60.182.182/api/v1/books" ;
-	filter_books_url: string = "http://169.60.182.182/api/v1/book/" ;
-	assets_directory: string = "http://169.60.182.182/uploads/" ;
+	fullname: string ;
+	surname: string ;
+	all_books_url: string  ;
+	filter_books_url: string  ;
+	assets_directory: string ;
+
+	url: string ;
 
 	pro_pic: any = "assets/imgs/avatar1.png" ;
 
@@ -35,8 +40,15 @@ export class HomePage {
 		public toastCtrl: ToastController,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public http: Http
+		public http: Http,
+		public global: GlobalsProvider
 		) {
+
+		this.url = global.app_url ;
+
+		this.all_books_url = global.api_url + "books" ;
+		this.filter_books_url = global.api_url + "book" ;
+		this.assets_directory = global.app_url + "uploads/" ;
 
 	}
 
@@ -123,7 +135,7 @@ export class HomePage {
 
         this.storage.get( 'pro_pic' ).then( propic => {
             if ( propic != null ) {
-                this.pro_pic = propic ;
+                this.global.avatar = propic ;
             }
         }) ;
 
@@ -131,7 +143,8 @@ export class HomePage {
 
             if ( profile != null  ) {
 
-                this.fullname = profile.fullname  ;
+                this.global.fullname = profile.fullname + " " + profile.surname  ;
+                this.global.email = profile.email ;
 
             }
 

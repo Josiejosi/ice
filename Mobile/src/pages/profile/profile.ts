@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage' ;
 
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { GlobalsProvider } from '../../providers/globals/globals';
+
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
@@ -30,7 +32,8 @@ export class ProfilePage {
 		public storage: Storage,
 		public toastCtrl: ToastController,
 		public loadingCtrl: LoadingController,
-		private camera: Camera
+		private camera: Camera,
+		public global: GlobalsProvider
 		) {}
 
 	takePhoto(sourceType:number) {
@@ -52,7 +55,7 @@ export class ProfilePage {
 	    this.camera.getPicture(options).then( ( imageData ) => {
 
 	    	let base64Image = 'data:image/jpeg;base64,' + imageData ;
-	    	this.pro_pic=base64Image ;
+	    	this.global.avatar=base64Image ;
 
 	    	this.storage.set( 'pro_pic', base64Image ).then( () => {
 
@@ -110,13 +113,15 @@ export class ProfilePage {
 	loadProfile() {
         this.storage.get( 'pro_pic' ).then( propic => {
             if ( propic != null ) {
-                this.pro_pic = propic ;
+                this.global.avatar = propic ;
             }
         }) ;
 
         this.storage.get( 'profile' ).then( profile => {
 
             if ( profile != null || typeof(profile) != "undefined" ) {
+
+            	this.global.fullname 	= profile.fullname + " " + profile.surname  ;
 
                 this.fullname 			= profile.fullname  ;
 				this.surname  			= profile.surname ;

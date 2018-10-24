@@ -17,6 +17,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { MainPage } from '../pages/main/main';
 
+import { GlobalsProvider } from '../providers/globals/globals';
+
 export interface MenuItem {
     title: string;
     component: any;
@@ -38,7 +40,13 @@ export class MyApp {
 
     pro_pic: any = "assets/imgs/avatar1.png" ;
 
-    constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, public storage: Storage) {
+    constructor(
+        private platform: Platform, 
+        private statusBar: StatusBar, 
+        private splashScreen: SplashScreen, 
+        public storage: Storage,
+        public global: GlobalsProvider
+        ) {
 
         this.initializeApp() ;
 
@@ -60,14 +68,16 @@ export class MyApp {
 
             this.storage.get( 'pro_pic' ).then( propic => {
                 if ( propic != null  ) {
-                    this.pro_pic = propic ;
+                    this.global.avatar = propic ;
                 }
             }) ;
             this.storage.get( 'profile' ).then( profile => {
 
                 if ( profile != null ) {
 
-                    this.fullname = profile.fullname + " " + profile.surname ;
+                    //this.fullname = profile.fullname + " " + profile.surname ;
+
+                    this.global.fullname = profile.fullname + " " + profile.surname ;
 
                     this.rootPage = TabsPage ;
                 } else {

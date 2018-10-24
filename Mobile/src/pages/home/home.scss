@@ -4,7 +4,7 @@ page-home {
 .scrollmenu {
 /*     overflow: auto;
 white-space: nowrap; */
-    width: 250px !important;
+    width: 300px !important;
 
 }
 
@@ -12,8 +12,12 @@ white-space: nowrap; */
     display: inline-block;
     color: #333 !important;
     text-align: center;
-    padding: 5px;
+    padding: 15px;
     text-decoration: none;
+    width: 150px  !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .author {
@@ -25,6 +29,7 @@ white-space: nowrap; */
 	color: #333 ;
 	font-size: 12px ;
 }
+
 
 .scrollmenu a:hover {
     background-color: #777;

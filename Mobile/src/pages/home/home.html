@@ -13,37 +13,28 @@
 </ion-navbar>
 <ion-toolbar  color="ellumiate">
 <div class="user-avatar text-center" text-center>
-	<img [src]="pro_pic" width="80px">
+	<img [src]="global.avatar" width="80px">
 </div>
-<p class="text-center" text-center style="color: white !important;">{{ fullname }}</p>
+<p class="text-center" text-center style="color: white !important;">{{ global.fullname }}</p>
 </ion-toolbar>
 </ion-header>
-<ion-content padding class="animated fadeIn common-bg">
+<ion-content padding class="animated fadeIn common-bg" overflow-scroll="true">
 <ion-item>
 <ion-label> <ion-icon name="search"></ion-icon></ion-label>
 <ion-input clearInput type="text" [(ngModel)]="search_criteria"></ion-input>
 <button item-right color="primary" round tappable (click)="Search()"><ion-icon name="search"></ion-icon></button>
 </ion-item>
-<!-- <ion-list padding>
-<ion-item *ngFor="let book of books;" (click)="selectBook(book);">
-<ion-avatar item-start>
-<img src="{{ assets_directory }}{{ book.cover_url }}">
-</ion-avatar>
-<h2>{{ book.title }}</h2>
-<p>{{ book.author }}</p>
-</ion-item>
-</ion-list> -->
 <div padding>
 	<h6>
 	Suggested Books
 	<button color="primary" small round tappable (click)="Search()">view all</button>
 	</h6>
-	<ion-scroll scrollX="true" style="width:100vw; height:150px" >
+	<ion-scroll  style="width:100%;height:200px;overflow-x: scroll" scrollX="true" >
 	<ion-row nowrap>
 	<div class="scrollmenu" *ngFor="let book of books;" (click)="selectBook(book);">
 		<a href="#">
 			<!--<img src="{{ assets_directory }}{{ book.cover_url }}" width="85">-->
-			<img src="{{ assets_directory }}{{ book.cover_url }}" width="85">
+			<img src="{{ assets_directory }}{{ book.cover_url }}" width="85px">
 			<br><span class="title">{{ book.title }}</span>
 			<br><span class="author">{{ book.author }}</span>
 		</a>

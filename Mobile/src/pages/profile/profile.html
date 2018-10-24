@@ -6,12 +6,12 @@
 <div class="user-avatar text-center" text-center>
 	<div class="image-upload">
 		<label for="file-input">
-			<img [src]="pro_pic" width="100px" />
+			<img [src]="global.avatar" width="100px" />
 			
 		</label>
 		<input id="file-input"  accept="image/*"  [(ngModel)]="file_upload" type="file" (change)='handleFileSelect($event)' />
 	</div>
-	<p class="text-center" style="color: white !important;">{{fullname}} {{surname}}</p>
+	<p class="text-center" style="color: white !important;">{{global.fullname}}</p>
 	<p class="text-center" style="color: white !important;">{{gender}} <ion-icon name="transgender"></ion-icon></p>
 </div>
 </ion-toolbar>

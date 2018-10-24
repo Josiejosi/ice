@@ -1,17 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-/*
-  Generated class for the GlobalsProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class GlobalsProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello GlobalsProvider Provider');
-  }
+	public fullname: string = "John" ;
+	public surname: string = "Doe" ;
+	public email: string ;
+	public avatar: string = "assets/imgs/avatar1.png" ;
+
+	public app_url: string = "http://169.60.182.182/" ;
+	public api_url: string = "http://169.60.182.182/api/v1/" ;
+
+	constructor() {}
 
 }

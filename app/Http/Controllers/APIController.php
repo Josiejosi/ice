@@ -11,6 +11,7 @@ use App\User ;
 use App\Book ;
 use App\Role ;
 use App\Chapter ;
+use App\PurchaseChapter ;
 
 class APIController extends Controller
 {
@@ -81,5 +82,41 @@ class APIController extends Controller
 	    return Chapter::whereBookId( $book_id )->get() ;
 
 	}
+
+    public function userIDByEmail( $email ) {
+
+        header( "Access-Control-Allow-Origin: *" ) ;
+
+        if ( User::whereEmail( $email )->count() > 0 ) {
+
+            $user = User::whereEmail( $email )->first() ;
+
+            return [ 'user' => $user->id ] ;
+
+        }
+
+        return [ 'message' => 'failed' ] ;
+
+    }
+
+    public function chapterPurchase( $book_id, $chapter_id, $user_id ) {
+
+        header( "Access-Control-Allow-Origin: *" ) ;
+
+        $chapter_price = env( 'CHAPTER_PRICE' ) ;
+
+        $chapter_purchase = new PurchaseChapter ;
+
+        $chapter_purchase->book_id = $book_id ; 
+        $chapter_purchase->chapter_id = $chapter_id ; 
+        $chapter_purchase->user_id = $user_id ;
+        $chapter_purchase->amount = $chapter_price ;
+        $chapter_purchase->is_purchased = true ;
+
+        $chapter_purchase->save() ;
+
+        return [ 'message' => 'success' ] ;
+
+    }
 
 }

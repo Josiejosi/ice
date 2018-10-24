@@ -15,17 +15,25 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Storage } from '@ionic/storage';
 
+import { GlobalsProvider } from '../../providers/globals/globals' ;
+
 @Component({
 	selector: 'page-books-details',
 	templateUrl: 'books-details.html',
 })
-export class BooksDetailsPage {
+export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id}/{user_id}
 
 	selected_book: any = [] ;
 	chapters: any = [] ;
 
 	assets_directory: string = "http://169.60.182.182/uploads/" ;
 	chapter_url: string = "http://169.60.182.182/api/v1/chapters/" ;
+
+	url: string ;
+
+	api_url: string ;
+
+	user_id: string ;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -35,8 +43,13 @@ export class BooksDetailsPage {
 		public inappbrowser: InAppBrowser,
 		public modalCtrl : ModalController,
 		public storage: Storage,
-		public http: Http
+		public http: Http,
+		public global: GlobalsProvider
 		) {
+
+		this.url = global.app_url ;
+
+		this.api_url = global.api_url ;
 	}
 
 	viewChapters(book_id) {
@@ -71,7 +84,9 @@ export class BooksDetailsPage {
 
 	download( chapter, selected_book ) {
 
-	  	let browser = this.inappbrowser.create( "http://169.60.182.182/pay/"+chapter.name+"/"+selected_book.title, '_blank', 'location=no') ;
+	  	let browser = this.inappbrowser.create( this.url + "pay/"+chapter.name+"/"+selected_book.title, '_blank', 'location=no') ;
+
+	  	let purchase_chapter = this.api_url + "purchase/chapters/"+selected_book.id+"/"+chapter.id+"/"+ this.user_id ;
 
 	   	browser.show();
 
@@ -92,7 +107,11 @@ export class BooksDetailsPage {
 	   
 	    browser.on("loadstop").subscribe(  event => {
 	       	
-	        if ( event.url == "http://169.60.182.182/payment/return" ) {
+	        if ( event.url == this.url + "/payment/return" ) {
+
+	        	console.log( "Payment was successful." ) ; 
+
+	        	this.purchasedChapter( purchase_chapter ) ;
 	        	
 	         	setInterval( function() { 
 
@@ -110,7 +129,7 @@ export class BooksDetailsPage {
 	         	}, 3000 ) ;
 	        }
 
-	        if ( event.url == "http://169.60.182.182/payment/cancel" ) {
+	        if ( event.url == this.url + "/payment/cancel" ) {
 
 	        	setInterval( function() {
 
@@ -122,7 +141,7 @@ export class BooksDetailsPage {
 
 	        }
 
-	        if ( event.url == "http://169.60.182.182/payment/notify" ) {
+	        if ( event.url == this.url + "/payment/notify" ) {
 
 	        	console.log( "notify" ) ;
 	         	browser.close() ;
@@ -140,7 +159,7 @@ export class BooksDetailsPage {
 
 	loadAllChapters( book_id ) {
 
-		const loader = this.loadingCtrl.create({content: "Please wait..."});
+		const loader = this.loadingCtrl.create({content: "Loading chapter..."});
 		loader.present();
 
 		this.http.get( this.chapter_url + book_id ).map( res => res.json() ).subscribe( data => { 
@@ -154,7 +173,40 @@ export class BooksDetailsPage {
 
 	}
 
+	setUserID() {
+		let user_url = this.api_url + "user/id/" + this.global.email ;
+
+		this.http.get( user_url ).map( res => res.json() ).subscribe( data => { 
+
+			if ( "message" in data ) {
+
+			} else {
+
+				this.user_id = data.user ;
+				console.log( "User ID: " + this.user_id ) ;
+			}
+
+		});
+
+	}
+
+	purchasedChapter( url ) {
+
+		console.log( "Purchasing chapter...." ) ;
+
+		this.http.get( url ).map( res => res.json() ).subscribe( data => { 
+
+			console.log( "Chapter purchased." ) ;
+
+			this.loadAllChapters( this.selected_book.id ) ;
+
+		});
+
+	}
+
 	ionViewDidLoad() {
+
+		this.setUserID() ;
 
 		this.selected_book = this.navParams.get( 'selected_book' ) ;
 
