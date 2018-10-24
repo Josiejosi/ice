@@ -46,3 +46,6 @@ Route::get('/api/v1/books', 'APIController@getAllBooks') ;
 Route::get('/api/v1/chapters/{book_id}/{user_id}', 'APIController@getChapterByBookId') ;
 Route::get('/api/v1/purchase/chapters/{book_id}/{chapter_id}/{user_id}', 'APIController@chapterPurchase') ; //userIDByEmail( $email )
 Route::get('/api/v1/user/id/{email}', 'APIController@userIDByEmail') ;
+
+Route::get('/api/v1/fullchapter/{chapter_id}', 'APIController@getFullChapterById') ;
+Route::get('/api/v1/previewchapter/{chapter_id}', 'APIController@getPreviewChapterById') ;

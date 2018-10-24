@@ -216,6 +216,10 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	}
 
+	open( chapter ) {
+		this.navCtrl.push( FullChapterPage, { chapter: chapter }) ;		
+	}
+
 
 	purchasedChapter( url ) {
 

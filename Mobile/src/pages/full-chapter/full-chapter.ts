@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 
 import { ListenPage } from '../listen/listen';
 
 import { NotesPage } from '../notes/notes';
+
+import {Http} from '@angular/http';
+import 'rxjs/add/operator/map';
+
+import { GlobalsProvider } from '../../providers/globals/globals' ;
 
 @Component({
 	selector: 'page-full-chapter',
@@ -14,8 +19,17 @@ export class FullChapterPage {
 	title: any ;
 	sound: any ;
 	content: any ;
+	book: any ;
+	chapter_number: any ;
 
-	constructor( public navCtrl: NavController, public navParams: NavParams, public modalCtrl : ModalController ) {
+	constructor( 
+		public navCtrl: NavController, 
+		public navParams: NavParams, 
+		public modalCtrl : ModalController,
+		public loadingCtrl: LoadingController,
+		public http: Http,
+		public global: GlobalsProvider 
+	) {
 	}
 
 	PlaySound( content ) {
@@ -32,11 +46,32 @@ export class FullChapterPage {
 	    
 	}
 
+	getFullChapter(book_id) {
+		let get_chapter = this.global.api_url + "/fullchapter/" + book_id ;
+
+		const loader = this.loadingCtrl.create({content: "Loading chapter..."}) ;
+		loader.present();
+
+		this.http.get( get_chapter ).map( res => res.json() ).subscribe( data => { 
+
+			this.content = data ;
+
+			console.log( data ) ; 
+
+		    loader.dismiss() ;
+
+		});
+
+	}
+
 	ionViewDidLoad() {
+
+		this.book = this.navParams.get( 'chapter' ) ;
 		
-		this.content = this.navParams.get( 'book' ) ;
-		this.title = this.navParams.get( 'title' ) ;
-		this.sound = this.navParams.get( 'sound' ) ;
+		this.getFullChapter(this.book)
+		this.title = this.book.title ;
+		this.sound = this.book.audio_url ;
+		this.chapter_number = this.book.chapter_number ;
 
 	}
 

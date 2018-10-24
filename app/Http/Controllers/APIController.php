@@ -75,6 +75,24 @@ class APIController extends Controller
 
 	}
 
+    public function getFullChapterById( $chapter_id ) {
+        
+        header( "Access-Control-Allow-Origin: *" ) ;
+
+        return  ( Chapter::find( $chapter_id ) )->raw_content ;
+
+    }
+
+
+
+    public function getPreviewChapterById( $chapter_id ) {
+        
+        header( "Access-Control-Allow-Origin: *" ) ;
+
+        return  ( Chapter::find( $chapter_id ) )->chapter_preview_content ;
+
+    }
+
     public function getChapterByBookId( $book_id, $user_id ) {
     	
     	header( "Access-Control-Allow-Origin: *" ) ;

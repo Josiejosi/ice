@@ -32,8 +32,20 @@
 </div>
 <h3>{{ chapter.name }}</h3>
 <p>{{ chapter.number_of_pages }} Page(s)</p>
+<h3>R 5.00</h3>
 <button ion-button round small small-text color="ellumiate" item-end tappable (click)="preview( chapter, selected_book );">Preview</button>
-<button ion-button round outline small-text small color="ellumiate" item-end tappable (click)="download( chapter, selected_book  );">Download</button>
+<button ion-button round outline small-text small color="ellumiate"
+item-end tappable
+*ngIf="chapter.is_purchased == false"
+(click)="download( chapter, selected_book  );">
+Download
+</button>
+<button ion-button round outline small-text small
+color="ellumiate" item-end tappable
+*ngIf="chapter.is_purchased == true"
+(click)="open( chapter  );">
+Open
+</button>
 </ion-item>
 </ion-list>
 </ion-content>
