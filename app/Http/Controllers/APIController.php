@@ -11,20 +11,48 @@ use App\User ;
 use App\Book ;
 use App\Role ;
 use App\Chapter ;
+use App\UserDetail ;
 use App\PurchaseChapter ;
 
 class APIController extends Controller
 {
 
-    public function registerUser( $email, $name, $password ) {
+    //surname, cell_phone_number, gender, province, type_of_study, institution, field_of_study
+
+    public function registerUser( 
+        $email, 
+        $name, 
+        $password, 
+        $surname, 
+        $cell_phone_number, 
+        $gender, 
+        $province, 
+        $type_of_study,
+        $institution,
+        $field_of_study
+    ) {
 
     	header( "Access-Control-Allow-Origin: *" ) ;
 
-        $user           =  User::create([
-            'name'      => $name,
-            'email'     => $email,
-            'password'  => Hash::make( $password ),
+        $user                       =  User::create([
+            'name'                  => $name,
+            'email'                 => $email,
+            'password'              => Hash::make( $password ),
         ]);
+
+        $details                    = new UserDetail ;
+
+        $details->surname           = $surname ;
+        $details->age               = "0" ;
+        $details->cell_phone_number = $cell_phone_number ;
+        $details->gender            = $gender ;
+        $details->province          = $province ;
+        $details->type_of_study     = $type_of_study ;
+        $details->institution       = $institution ;
+        $details->field_of_study    = $field_of_study ;
+
+        $details->save() ;
+
 
         $user->roles()->attach( Role::where( 'name', 'student' )->first() ) ;
 

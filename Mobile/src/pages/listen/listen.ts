@@ -21,8 +21,6 @@ export class ListenPage {
 
 	loadProgress: number = 5 ;
 
-	play_url: string = "http://169.60.182.182/uploads/books/publisher_id_2/" ;
-
 	constructor( 
 		public navCtrl: NavController, 
 		public navParams: NavParams, 
@@ -36,10 +34,8 @@ export class ListenPage {
 
 	PlaySound( ) {
 
-		let playsound = this.play_url + this.title + "/audio/" + this.sound.toLowerCase() + ".mp3" ;
-
 		this.audio = new Audio();
-		this.audio.src = playsound ;
+		this.audio.src = this.sound ;
 		this.audio.load();
 		this.audio.play();
 

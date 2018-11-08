@@ -47,9 +47,11 @@ export class AddStudiesPage {
 	}
 
 	first_login() {
+
+		//{email}/{name}/{password}/{surname}/{cell_phone_number}/{gender}/{province}/{type_of_study}/{institution}/{field_of_study}
 		
 
-		let url = "http://169.60.182.182//api/v1/register/"+this.email+"/"+this.fullname+"/"+this.password ;
+		let url = "http://169.60.182.182//api/v1/register/"+this.email+"/"+this.fullname+"/"+this.password+"/"+this.surname+"/"+this.cell_phone_number+"/"+this.gender+"/"+this.province+"/"+this.type_of_study+"/"+this.institution+"/"+this.field_of_study ;
 
 		const loader = this.loadingCtrl.create({content: "Please wait..."});
 		loader.present();
@@ -115,6 +117,7 @@ export class AddStudiesPage {
 		this.cell_phone_number = this.navParams.get('cell_phone_number');
 		this.email = this.navParams.get('email');
 		this.dob = this.navParams.get('dob');
+		this.province = this.navParams.get('province');
 		this.gender = this.navParams.get('gender');
 		this.password = this.navParams.get('password');
 		console.log( this.password );

@@ -69,4 +69,12 @@ class User extends Authenticatable
 
     }
 
+    /**
+     * 
+     */
+    public function detail() {
+        return $this->hasOne( UserDetail::class ) ;
+    }
+
+
 }

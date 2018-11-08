@@ -47,13 +47,14 @@ export class RegistrationPage {
 
 	}
 
-	add_profile() {
+	add_profile() { 
 		this.navCtrl.push( AddProfilePage, {
 			fullname: this.fullname,
 			cell_phone_number: this.cell_phone_number,
 			email: this.email,
 			surname: this.surname,
-			dob: this.dob,			
+			dob: this.dob,	
+			province: this.province,			
 			password: this.password,			
 		}) ;
 	}

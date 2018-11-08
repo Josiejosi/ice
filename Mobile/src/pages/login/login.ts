@@ -81,9 +81,11 @@ export class LoginPage {
 
 	    			} else {
 
-	    				this.navCtrl.setRoot( TabsPage ) ;
+	    				this.storage.set( 'profile', profile ).then( ( ) => {
 
-	    				this.storage.set( 'profile', profile ) ;
+	    					this.navCtrl.setRoot( TabsPage ) ;
+
+	    				}) ;
 
 	    			}
 

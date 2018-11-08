@@ -18,7 +18,7 @@ export class FullChapterPage {
 
 	title: any ;
 	sound: any ;
-	content: any ;
+	content: any = "" ;
 	book: any ;
 	chapter_number: any ;
 
@@ -34,7 +34,7 @@ export class FullChapterPage {
 
 	PlaySound( content ) {
 
-		this.navCtrl.push( ListenPage, {  book: content, title: this.title, sound: this.sound } ) ;
+		this.navCtrl.push( ListenPage, {  title: this.title, sound: this.sound } ) ;
 
 	}
 
@@ -47,20 +47,20 @@ export class FullChapterPage {
 	}
 
 	getFullChapter(book_id) {
-		let get_chapter = this.global.api_url + "/fullchapter/" + book_id ;
+		let get_chapter = this.global.api_url + "fullchapter/" + book_id ;
 
 		const loader = this.loadingCtrl.create({content: "Loading chapter..."}) ;
 		loader.present();
 
-		this.http.get( get_chapter ).map( res => res.json() ).subscribe( data => { 
+		this.http.get( get_chapter ).subscribe( data => { 
 
-			this.content = data ;
-
-			console.log( data ) ; 
+			this.content = data.text() ;
 
 		    loader.dismiss() ;
 
-		});
+		}, err => {
+            loader.dismiss() ;
+        }) ;
 
 	}
 
@@ -68,8 +68,8 @@ export class FullChapterPage {
 
 		this.book = this.navParams.get( 'chapter' ) ;
 		
-		this.getFullChapter(this.book)
-		this.title = this.book.title ;
+		this.getFullChapter(this.book.id) ;
+		this.title = this.book.name ;
 		this.sound = this.book.audio_url ;
 		this.chapter_number = this.book.chapter_number ;
 

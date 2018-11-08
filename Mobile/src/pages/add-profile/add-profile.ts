@@ -78,7 +78,8 @@ export class AddProfilePage {
 			cell_phone_number: this.cell_phone_number,
 			email: this.email,
 			surname: this.surname,
-			dob: this.dob,	
+			dob: this.dob,
+			province: this.province,	
 			gender: this.gender,		
 			password: this.password,		
 		}) ;		
@@ -91,6 +92,7 @@ export class AddProfilePage {
 		this.cell_phone_number = this.navParams.get('cell_phone_number');
 		this.email = this.navParams.get('email');
 		this.dob = this.navParams.get('dob');
+		this.province = this.navParams.get('province');
 		this.password = this.navParams.get('password');
 		console.log(this.password);
 	}

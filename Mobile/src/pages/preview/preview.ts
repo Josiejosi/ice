@@ -19,8 +19,9 @@ export class PreviewPage {
 
 	title: any ;
 	sound: any ;
-	content: any ;
+	content: any = "" ;
 	book: any ;
+	chapter_number: any ;
 
 	constructor( 
 		public navCtrl: NavController, 
@@ -39,16 +40,14 @@ export class PreviewPage {
 	}
 
 	getPreviewChapter(book_id) {
-		let get_chapter = this.global.api_url + "/previewchapter/" + book_id ;
+		let get_chapter = this.global.api_url + "previewchapter/" + book_id ;
 
 		const loader = this.loadingCtrl.create({content: "Loading preview..."}) ;
 		loader.present();
 
-		this.http.get( get_chapter ).map( res => res.json() ).subscribe( data => { 
+		this.http.get( get_chapter ).subscribe( data => { 
 
-			this.content = data ;
-
-			console.log( data ) ; 
+			this.content = data.text() ;
 
 		    loader.dismiss() ;
 
@@ -70,7 +69,7 @@ export class PreviewPage {
 		
 		this.book = this.navParams.get( 'chapter' ) ;
 		
-		this.getPreviewChapter(this.book)
+		this.getPreviewChapter(this.book.id) ;
 		this.title = this.book.title ;
 		this.sound = this.book.audio_url ;
 		this.chapter_number = this.book.chapter_number ;

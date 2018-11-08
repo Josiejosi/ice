@@ -13,6 +13,10 @@
 <div padding text-center>
 	<ion-list>
 	<ion-item>
+	<ion-label fixed>Institution</ion-label>
+	<ion-input type="text" [(ngModel)]="institution" name="institution"></ion-input>
+	</ion-item>
+	<ion-item>
 	<ion-label>Level Of Study</ion-label>
 	<ion-select color="ellumiate" [(ngModel)]="level_of_study">
 	<ion-option value="nes">Undegrad</ion-option>
@@ -21,7 +25,7 @@
 	</ion-item>
 	<ion-item>
 	<ion-label>Select Faculty</ion-label>
-	<ion-select color="ellumiate" [(ngModel)]="level_of_study">
+	<ion-select color="ellumiate" [(ngModel)]="field_of_study">
 	<ion-option value="Account">Account</ion-option>
 	<ion-option value="Eccomonics">Eccomonics</ion-option>
 	<ion-option value="Science">Science</ion-option>

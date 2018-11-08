@@ -1,15 +1,15 @@
-<!--
-Generated template for the FullChapterPage page.
-See http://ionicframework.com/docs/components/#navigation for more info on
-Ionic pages and navigation.
--->
 <ion-header>
-<ion-navbar>
-<ion-title>Download Chapter</ion-title>
+<ion-navbar  color="ellumiate">
+<ion-title text-center>{{ title }}</ion-title>
+<ion-buttons end>
+<button ion-button tappable (click)="PlaySound()">
+<ion-icon name="headset"></ion-icon>
+</button>
+</ion-buttons>
 </ion-navbar>
 </ion-header>
 <ion-content padding>
-<div [innerHtml]="content"></div>
+<div [innerHtml]="content | sanitizeHtml"></div>
 <ion-fab right bottom>
 <button ion-fab color="ellumiate" (click)="openModal()"><ion-icon name="create"></ion-icon></button>
 </ion-fab>

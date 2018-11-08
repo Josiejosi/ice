@@ -77,9 +77,8 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
         this.storage.set( 'bookmark', bookmark ).then( () => {
 
 			this.navCtrl.push( PreviewPage, {  
-				book: chapter.chapter_preview_content, 
-				title: selected_book.title, 
-				sound: chapter.audio_url  
+				book: selected_book, 
+				chapter: chapter,   
 			}) ;
 
         }) ;
@@ -90,18 +89,11 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	  	let browser = this.inappbrowser.create( this.url + "pay/"+chapter.name+"/"+selected_book.title, '_blank', 'location=no') ;
 
-	  	let purchase_chapter = this.api_url + "purchase/chapters/"+selected_book.id+"/"+chapter.id+"/"+ this.user_id ;
+	  	let purchase_chapter = this.api_url + "purchase/chapters/"+selected_book.id+"/"+chapter.id+"/"+ this.global.user_id ;
 
 	   	browser.show();
 
 	   	browser.on("loadstart").subscribe( event => {
-	        
-	        if ( event.url.indexOf("some error url") > -1 ) {
-
-	         	browser.close();
-		        this.navCtrl.setRoot( BooksDetailsPage, { success:false } );
-
-	        }
 
 	    }, err => { 
 
@@ -110,65 +102,63 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 	    });
 	   
 	    browser.on("loadstop").subscribe(  event => {
-	       	
-	        if ( event.url == this.url + "/payment/return" ) {
 
-	        	console.log( "Payment was successful." ) ; 
+	       	
+	        if ( event.url == this.url + "payment/return" ) {
 
 	        	this.purchasedChapter( purchase_chapter ) ;
 	        	
 	         	setInterval( function() {
 
-	         		let purchased_books: any = [] ;
+	       //   		let purchased_books: any = [] ;  
 
-			        this.storage.ready().then( () => {   
+				    // this.storage.get( 'books' ).then( ( books ) => {
 
-			           	this.storage.get( 'books' ).then( ( books ) => {
+				    //     if ( books != null ) {
 
-			                if ( books != null ) {
+				    //         for( let i = 0; i < books.length; i++ ) {
 
-			                    for( let i = 0; i < books.length; i++ ) {
+				    //             if ( books[i].book_id != selected_book.id && books[i].chapter_id != chapter.id ) {
 
-			                        if ( books[i].book_id != selected_book.id && books[i].chapter_id != chapter.id ) {
+				    //                 purchased_books.push( {
+				    //                             book_id: books[i].book_id, 
+				    //                             book_cover: books[i].book_cover, 
+				    //                             chapter_id: books[i].chapter_id, 
+				    //                             chapter_content: books[i].chapter_content
+				    //                 }) ;
 
-			                            purchased_books.push( {
-			                                book_id: books[i].book_id, 
-			                                book_cover: books[i].book_cover, 
-			                                chapter_id: books[i].chapter_id, 
-			                                chapter_content: books[i].chapter_content
-			                            }) ;
+				    //             }
+				    //         }  
+				    //     }
 
-			                        }
-			                    }  
-			                }
+				    // }); 
 
-			            });
-			        }); 
+			     //    purchased_books.push({
 
-			        purchased_books.push({
+	       //   			book_id: selected_book.id,
+	       //   			book_cover: selected_book.cover_url,
+	       //   			chapter_id: chapter.id,
+	       //   			chapter_content: chapter.raw_content,
 
-	         			book_id: selected_book.id,
-	         			book_cover: selected_book.cover_url,
-	         			chapter_id: chapter.id,
-	         			chapter_content: chapter.raw_content,
+			     //    }) ;
 
-			        }) ;
+			        // this.storage.ready().then( () => {
 
-			        this.storage.ready().then( () => {
+		         // 		this.storage.set( 'books', purchased_books ).then( () => {
 
-		         		this.storage.set( 'books', purchased_books ).then( () => {
+		         // 			browser.close() ; 
 
-		         			browser.close() ; 
+		         // 		}) ;
 
-		         		}) ;
+	         	// 	});
 
-	         		});
+	         		browser.close() ; 
 
 
 	         	}, 3000 ) ;
 	        }
 
-	        if ( event.url == this.url + "/payment/cancel" ) {
+	        if ( event.url == this.url + "payment/cancel" ) {
 
 	        	setInterval( function() {
 
@@ -180,7 +170,7 @@ export class BooksDetailsPage { //api/v1/purchase/chapters/{book_id}/{chapter_id
 
 	        }
 
-	        if ( event.url == this.url + "/payment/notify" ) {
+	        if ( event.url == this.url + "payment/notify" ) {
 
 	        	console.log( "notify" ) ;
 	         	browser.close() ;

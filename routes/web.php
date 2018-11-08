@@ -39,7 +39,7 @@ Route::get('/payment/cancel', 'PaymentController@cancel') ;
 Route::get('/payment/notify', 'PaymentController@notify') ;
 
 
-Route::get('/api/v1/register/{email}/{name}/{password}', 'APIController@registerUser') ;
+Route::get('/api/v1/register/{email}/{name}/{password}/{surname}/{cell_phone_number}/{gender}/{province}/{type_of_study}/{institution}/{field_of_study}', 'APIController@registerUser') ;
 Route::get('/api/v1/login/{email}/{password}', 'APIController@loginUser') ;
 Route::get('/api/v1/book/{search}', 'APIController@searchBooks') ;
 Route::get('/api/v1/books', 'APIController@getAllBooks') ;
